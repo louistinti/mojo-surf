@@ -107,7 +107,7 @@ section{scroll-margin-top:72px}
 }
 
 /* ---------- le concept ---------- */
-.concept{padding-block:clamp(56px,8vw,112px)}
+.concept{padding-block:clamp(48px,6vw,88px)}
 .concept-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(28px,5vw,80px);align-items:start}
 .concept h2{position:sticky;top:96px}
 .points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
@@ -118,10 +118,12 @@ section{scroll-margin-top:72px}
 .point p{color:var(--fg-2);max-width:52ch}
 
 /* ---------- les spots : carte et carrousel ---------- */
-.spots{padding-block:clamp(56px,8vw,112px);background:var(--bg-2)}
-.spots-head{display:flex;flex-direction:column;gap:12px;margin-bottom:clamp(28px,4vw,48px)}
-.spots-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(24px,4vw,56px);align-items:stretch}
-.map{position:relative;border-radius:calc(var(--radius) + 8px);overflow:hidden;background:var(--sea);box-shadow:var(--shadow);aspect-ratio:2/3;min-height:0}
+.spots{padding-block:clamp(40px,5vw,64px);background:var(--bg-2)}
+.spots-head{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.spots-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(24px,4vw,56px);align-items:stretch;height:clamp(480px,calc(100dvh - 372px),760px)}
+.map{position:relative;border-radius:calc(var(--radius) + 8px);overflow:hidden;background:var(--sea);box-shadow:var(--shadow);min-height:0}
+.map-north{position:absolute;top:12px;right:14px;display:flex;align-items:center;gap:2px;font:600 12px var(--body);color:var(--ocean);letter-spacing:.06em}
+.map-north svg{width:14px;height:14px}
 .map svg{position:absolute;inset:0;width:100%;height:100%}
 .map-legend{position:absolute;left:16px;bottom:14px;font-size:13px;color:var(--fg-2);background:color-mix(in srgb,var(--bg) 85%,transparent);padding:6px 10px;border-radius:999px}
 .spot-pin{cursor:pointer}
@@ -146,7 +148,7 @@ section{scroll-margin-top:72px}
 .panel-head{display:flex;flex-direction:column;gap:10px}
 .panel-head small{display:block;color:var(--fg-2);font-size:15px;font-weight:600;margin-top:2px}
 .panel-head p{color:var(--fg-2)}
-.photos{display:grid;grid-template-columns:3fr 2fr;grid-template-rows:1fr 1fr;gap:10px;min-height:300px}
+.photos{display:grid;grid-template-columns:3fr 2fr;grid-template-rows:1fr 1fr;gap:10px;min-height:150px}
 .photos figure{position:relative;margin:0;border-radius:var(--radius);overflow:hidden;background:var(--bg-2);min-height:0}
 .photos figure:first-child{grid-row:1/3}
 .photos img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -161,26 +163,26 @@ section{scroll-margin-top:72px}
 .counter b{color:var(--fg)}
 
 /* ---------- les cours ---------- */
-.courses{padding-block:clamp(56px,8vw,112px)}
-.courses-head{display:flex;flex-direction:column;gap:12px;margin-bottom:clamp(28px,4vw,48px)}
+.courses{padding-block:clamp(48px,6vw,88px)}
+.courses-head{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .bento{display:grid;grid-template-columns:7fr 5fr;grid-template-rows:1fr 1fr;gap:14px}
 .course{position:relative;border-radius:calc(var(--radius) + 8px);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:clamp(22px,2.4vw,32px);min-height:220px;background:var(--bg-2)}
 .course p{color:var(--fg-2);max-width:46ch}
-.course--main{grid-row:1/3;min-height:520px;color:#fff8f0}
+.course--main{grid-row:1/3;min-height:480px;color:#fff8f0}
 .course--main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
 .course--main::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,12,6,0) 30%,rgba(20,12,6,.82) 100%)}
 .course--main > *:not(img){position:relative;z-index:2}
 .course--main p{color:#f3e7d8}
-.course--photo{display:grid;grid-template-columns:1fr 150px;justify-content:stretch;align-items:end;padding-right:0}
+.course--photo{padding-right:calc(150px + clamp(22px,2.4vw,32px))}
 .course--photo .course-text{display:flex;flex-direction:column;gap:10px}
-.course--photo img{width:150px;height:100%;object-fit:cover;align-self:stretch;margin:calc(clamp(22px,2.4vw,32px) * -1) 0}
+.course--photo img{position:absolute;top:0;right:0;bottom:0;width:150px;height:100%;object-fit:cover}
 .price{font-family:var(--display);font-weight:800;font-size:clamp(28px,2.6vw,36px);letter-spacing:-.02em;line-height:1;display:flex;align-items:baseline;gap:8px}
 .price small{font:600 14px var(--body);color:inherit;opacity:.8}
 .course--main .price{color:#ffd9c8}
 .course:not(.course--main) .price{color:var(--accent)}
 
 /* ---------- tarifs ---------- */
-.rates{padding-block:clamp(56px,8vw,112px);background:var(--bg-2)}
+.rates{padding-block:clamp(48px,6vw,88px);background:var(--bg-2)}
 .rates-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(28px,5vw,80px);align-items:start}
 .rates-intro{display:flex;flex-direction:column;gap:14px}
 .season{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:10px 14px;border-radius:999px;background:var(--bg);font-size:14px;font-weight:600;color:var(--fg-2)}
@@ -201,7 +203,7 @@ section{scroll-margin-top:72px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill b{color:var(--accent)}}
 
 /* ---------- questions ---------- */
-.faq{padding-block:clamp(56px,8vw,112px)}
+.faq{padding-block:clamp(48px,6vw,88px)}
 .faq-grid{display:grid;grid-template-columns:4fr 8fr;gap:clamp(28px,5vw,80px);align-items:start}
 .faq h2{position:sticky;top:96px}
 .faq details{border-top:1px solid var(--line)}
@@ -213,7 +215,7 @@ section{scroll-margin-top:72px}
 .faq details p{color:var(--fg-2);padding-bottom:24px;max-width:60ch}
 
 /* ---------- réserver ---------- */
-.book{padding-block:clamp(56px,8vw,112px);background:var(--bg-2)}
+.book{padding-block:clamp(48px,6vw,88px);background:var(--bg-2)}
 .book-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(28px,5vw,80px);align-items:start}
 .book-intro{display:flex;flex-direction:column;gap:18px}
 .contact{display:flex;flex-direction:column;gap:6px;color:var(--fg-2);font-size:16px;padding-top:18px;border-top:1px solid var(--line)}
@@ -282,7 +284,8 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
   .concept h2,.faq h2{position:static}
   .bento{grid-template-columns:1fr;grid-template-rows:auto}
   .course--main{grid-row:auto;min-height:380px}
-  .map{max-width:340px;width:100%;margin-inline:auto}
+  .spots-grid{height:auto}
+  .map{max-width:340px;width:100%;margin-inline:auto;aspect-ratio:2/3}
 }
 @media (max-width:760px){
   body{font-size:16px}
@@ -301,8 +304,8 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
   .photos{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;min-height:0}
   .photos figure{aspect-ratio:4/3}
   .photos figure:first-child{grid-row:auto;grid-column:1/3;aspect-ratio:16/9}
-  .course--photo{grid-template-columns:1fr;padding-right:18px}
-  .course--photo img{width:100%;height:150px;margin:0;border-radius:10px;order:-1}
+  .course--photo{padding-right:18px}
+  .course--photo img{position:static;width:100%;height:150px;border-radius:10px;margin-bottom:4px}
   .row{grid-template-columns:1fr;padding:18px 0}
   .row .price{grid-column:1;grid-row:auto;margin-top:6px}
   form{grid-template-columns:1fr;padding:18px}
@@ -420,8 +423,8 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
     <div class="spots-grid">
       <div class="map reveal">
         <!-- Carte illustrée. Les positions des spots viennent du tableau SPOTS dans le script : le dessin peut être remplacé sans toucher à la logique. -->
-        <svg id="map" viewBox="0 0 400 600" preserveAspectRatio="xMidYMin slice" role="group" aria-label="Carte des quatre spots, du nord au sud">
-          <rect width="400" height="600" fill="var(--sea)"/>
+        <svg id="map" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Carte des quatre spots, du nord au sud">
+          <rect width="2000" height="600" fill="var(--sea)"/>
           <g aria-hidden="true">
             <path class="wave" d="M28 160c10-8 20-8 30 0s20 8 30 0"/>
             <path class="wave" d="M50 300c10-8 20-8 30 0s20 8 30 0"/>
@@ -429,12 +432,8 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
             <path class="wave" d="M120 540c10-8 20-8 30 0s20 8 30 0"/>
             <text class="map-text" transform="translate(44 400) rotate(-90)">Océan Atlantique</text>
           </g>
-          <path class="coast" d="M118 0C140 70 150 140 158 200c8 60 0 100 20 140 20 50 42 100 62 160 15 40 28 70 40 100H400V0Z"/>
+          <path class="coast" d="M118 0C140 70 150 140 158 200c8 60 0 100 20 140 20 50 42 100 62 160 15 40 28 70 40 100H2000V0Z"/>
           <path class="road" id="road" d="M190 100C212 150 205 200 214 230c6 40 2 60 12 90 18 55 48 110 66 180"/>
-          <g aria-hidden="true">
-            <text class="map-text" x="396" y="22" text-anchor="end">N</text>
-            <path d="M378 30l6-14 6 14-6-4z" fill="var(--ocean)"/>
-          </g>
           <g id="pins"></g>
           <g id="van" class="van" aria-hidden="true">
             <g transform="translate(-19 -17)">
@@ -447,6 +446,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
             </g>
           </g>
         </svg>
+        <div class="map-north" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M7 1l4 11-4-3-4 3z" fill="currentColor"/></svg>N</div>
         <div class="map-legend">Carte illustrée, hors échelle</div>
       </div>
 
@@ -788,6 +788,17 @@ function setSpot(i) {
   countCur.textContent = current + 1;
 }
 setSpot(0);
+
+// Le dessin fait 400 x 600. Si la case est plus large que 2/3, on montre plus de terre à droite plutôt que d'étirer.
+const mapSvg = document.getElementById('map');
+function fitMap() {
+  const r = mapSvg.parentElement.getBoundingClientRect();
+  if (!r.width || !r.height) return;
+  const w = Math.max(400, Math.round(600 * r.width / r.height));
+  mapSvg.setAttribute('viewBox', `0 0 ${w} 600`);
+}
+fitMap();
+new ResizeObserver(fitMap).observe(mapSvg.parentElement);
 
 document.getElementById('prev').addEventListener('click', () => setSpot(current - 1));
 document.getElementById('next').addEventListener('click', () => setSpot(current + 1));
