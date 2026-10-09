@@ -215,8 +215,9 @@ section{scroll-margin-top:72px}
 .modal-head{position:relative;min-height:200px}
 .modal-img{width:100%;aspect-ratio:16/7;object-fit:cover}
 .modal-close-form{position:absolute;top:12px;right:12px;z-index:2;margin:0;display:block;padding:0;background:none;border-radius:0;width:auto;line-height:0}
-.modal-close{width:44px;height:44px;border-radius:999px;border:0;background:var(--bg);color:var(--fg);display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow)}
-.modal-close:hover,.modal-close:focus-visible{background:var(--fg);color:var(--bg)}
+.modal-close{width:44px;height:44px;border-radius:999px;border:0;background:rgba(20,12,6,.55);color:#fff8f0;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background-color .2s,transform .25s cubic-bezier(.16,1,.3,1)}
+.modal-close:hover{background:rgba(20,12,6,.8)}
+.modal-close:active{transform:scale(.94)}
 .modal-close:focus,.modal-close:focus-visible{outline:none}
 .modal:focus,.modal:focus-visible{outline:none}
 .modal-close svg{width:18px;height:18px}
