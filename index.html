@@ -205,7 +205,8 @@ section{scroll-margin-top:72px}
 /* ---------- fiche de cours (pop-up) ---------- */
 .modal{border:0;padding:0;width:min(600px,calc(100% - 32px));max-width:none;max-height:min(92dvh,900px);border-radius:calc(var(--radius) + 8px);background:var(--bg);color:var(--fg);box-shadow:var(--shadow);overflow:auto;overscroll-behavior:contain}
 @media (min-width:761px){
-  .modal{width:min(900px,calc(100% - 48px));display:grid;grid-template-columns:5fr 7fr}
+  .modal{width:min(900px,calc(100% - 48px))}
+  .modal[open]{display:grid;grid-template-columns:5fr 7fr}
   .modal-head{min-height:100%}
   .modal-img{position:absolute;inset:0;height:100%;aspect-ratio:auto}
   .modal .gear-list{grid-template-columns:1fr 1fr}
