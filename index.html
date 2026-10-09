@@ -135,7 +135,9 @@ section{scroll-margin-top:72px}
 .spot-pin{cursor:pointer}
 .spot-pin circle.halo{fill:var(--accent);opacity:0;transition:opacity .3s,r .3s}
 .spot-pin circle.dot{fill:var(--bg);stroke:var(--fg);stroke-width:3;transition:fill .3s,stroke .3s}
-.spot-pin text{font:600 13px var(--body);fill:var(--fg);paint-order:stroke;stroke:var(--land);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.spot-pin text{font:600 13px var(--body);fill:var(--fg);paint-order:stroke;stroke:var(--land);stroke-width:4px;stroke-linejoin:round;cursor:pointer;transition:fill .2s}
+.spot-pin:hover text{fill:var(--accent-2)}
+.spot-pin .hit{fill:transparent;cursor:pointer}
 .spot-pin:hover circle.dot,.spot-pin[aria-pressed="true"] circle.dot{fill:var(--accent);stroke:var(--accent)}
 .spot-pin[aria-pressed="true"] circle.halo{opacity:.25;r:16}
 .spot-pin[aria-pressed="true"] text{font-weight:700}
@@ -762,7 +764,9 @@ SPOTS.forEach((s, i) => {
   g.setAttribute('tabindex', '0');
   g.setAttribute('aria-pressed', 'false');
   g.setAttribute('aria-label', `${s.name}, ${s.place}`);
-  g.innerHTML = `<circle class="halo" cx="${s.x}" cy="${s.y}" r="10"/>
+  // zone cliquable élargie : pastille + étiquette
+  g.innerHTML = `<rect class="hit" x="${s.x - 14}" y="${s.y - 16}" width="${s.name.length * 7.5 + 36}" height="32" rx="16"/>
+    <circle class="halo" cx="${s.x}" cy="${s.y}" r="10"/>
     <circle class="dot" cx="${s.x}" cy="${s.y}" r="7"/>
     <text x="${s.x + 16}" y="${s.y + 5}">${s.name}</text>`;
   g.addEventListener('click', () => setSpot(i));
