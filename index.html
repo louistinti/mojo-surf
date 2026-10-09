@@ -172,10 +172,15 @@ section{scroll-margin-top:72px}
 
 /* ---------- les cours ---------- */
 .courses{padding-block:clamp(40px,5vw,64px);min-height:calc(100dvh - 68px);display:flex;flex-direction:column;justify-content:center}
-.courses-head{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.courses-head{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
 .courses-head .lede{max-width:72ch}
 .bento{display:grid;grid-template-columns:6fr 6fr;grid-template-rows:1fr 1fr;gap:14px}
-.course{position:relative;border-radius:calc(var(--radius) + 8px);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:clamp(22px,2.4vw,32px);min-height:220px;background:var(--bg-2)}
+.course{position:relative;border-radius:calc(var(--radius) + 8px);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:clamp(22px,2.4vw,32px);min-height:220px;background:var(--bg-2);cursor:pointer;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+.course:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.course-open{all:unset;cursor:pointer;font:inherit;color:inherit}
+.course:has(.course-open:focus-visible){outline:3px solid var(--accent);outline-offset:3px}
+.course-more{font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px;color:inherit;opacity:.85}
+.course--main .course-more{color:#ffd9c8}
 .course p{color:var(--fg-2);max-width:46ch}
 .course--main{grid-row:1/3;min-height:460px;color:#fff8f0}
 .course--main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
@@ -190,26 +195,51 @@ section{scroll-margin-top:72px}
 .course--main .price{color:#ffd9c8}
 .course:not(.course--main) .price{color:var(--accent)}
 
-/* ---------- tarifs ---------- */
-.rates{padding-block:clamp(40px,5vw,64px);background:var(--bg-2);min-height:calc(100dvh - 68px);display:flex;flex-direction:column;justify-content:center}
-.rates-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(28px,5vw,80px);align-items:start}
-.rates-intro{display:flex;flex-direction:column;gap:14px}
-.season{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:10px 14px;border-radius:999px;background:var(--bg);font-size:14px;font-weight:600;color:var(--fg-2)}
+.season{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;padding:10px 14px;border-radius:999px;background:var(--bg-2);font-size:14px;font-weight:600;color:var(--fg-2)}
 .season svg{width:18px;height:18px;flex:none;color:var(--accent)}
-.rows{list-style:none;margin:0;padding:0}
-.row{display:grid;grid-template-columns:1fr auto;gap:8px 24px;align-items:baseline;padding:22px 0;border-top:1px solid var(--line)}
-.row:last-child{border-bottom:1px solid var(--line)}
-.row h3{font-size:22px}
-.row p{grid-column:1;color:var(--fg-2);font-size:15px}
-.row .price{grid-column:2;grid-row:1/3;align-self:center;color:var(--fg);font-size:clamp(30px,3vw,40px)}
-.row .price small{color:var(--fg-2)}
-.options{margin-top:28px;display:flex;flex-direction:column;gap:12px}
-.options p{font-weight:700}
-.pills{display:flex;flex-wrap:wrap;gap:8px}
 .pill{padding:9px 14px;border-radius:999px;background:var(--bg);font-size:15px;font-weight:600}
 .pill b{color:var(--accent-2)}
 :root[data-theme="dark"] .pill b{color:var(--accent)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pill b{color:var(--accent)}}
+
+/* ---------- fiche de cours (pop-up) ---------- */
+.modal{border:0;padding:0;width:min(600px,calc(100% - 32px));max-width:none;max-height:min(92dvh,900px);border-radius:calc(var(--radius) + 8px);background:var(--bg);color:var(--fg);box-shadow:var(--shadow);overflow:auto;overscroll-behavior:contain}
+@media (min-width:761px){
+  .modal{width:min(900px,calc(100% - 48px));display:grid;grid-template-columns:5fr 7fr}
+  .modal-head{min-height:100%}
+  .modal-img{position:absolute;inset:0;height:100%;aspect-ratio:auto}
+  .modal .gear-list{grid-template-columns:1fr 1fr}
+}
+.modal::backdrop{background:rgba(20,12,6,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.modal-head{position:relative;min-height:200px}
+.modal-img{width:100%;aspect-ratio:16/7;object-fit:cover}
+.modal-close-form{position:absolute;top:12px;right:12px;z-index:2;margin:0;display:block;padding:0;background:none;border-radius:0;width:auto;line-height:0}
+.modal-close{width:44px;height:44px;border-radius:999px;border:0;background:var(--bg);color:var(--fg);display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow)}
+.modal-close:hover{background:var(--fg);color:var(--bg)}
+.modal-close svg{width:18px;height:18px}
+.modal-body{padding:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:16px}
+.modal-body h3{font-size:clamp(26px,3vw,34px)}
+.modal-body p{color:var(--fg-2)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}
+.facts div{background:var(--bg-2);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.facts dt{font-size:13px;color:var(--fg-2);font-weight:600}
+.facts dd{margin:0;font-weight:700}
+.gear{border:0;padding:0;margin:0}
+.gear-list{display:grid;grid-template-columns:1fr;gap:6px}
+.gear legend{font-weight:700;padding:0;margin-bottom:8px}
+.gear-item{display:flex;align-items:center;gap:12px;padding:8px 14px;border-radius:12px;background:var(--bg-2);cursor:pointer;min-height:44px;font-weight:600}
+.gear-item input{width:20px;height:20px;min-height:0;padding:0;margin:0;accent-color:var(--accent);border:0;background:none;flex:none}
+.gear-item b{margin-left:auto;color:var(--accent-2);font-weight:700}
+.gear-item.included b{color:var(--fg-2);font-weight:600}
+.modal-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:18px}
+.total{font-weight:600;color:var(--fg-2);display:flex;align-items:baseline;gap:8px}
+.total b{font-family:var(--display);font-weight:800;font-size:30px;color:var(--fg);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:no-preference){
+  .modal[open]{animation:modal-in .35s cubic-bezier(.16,1,.3,1)}
+  @keyframes modal-in{from{opacity:0;transform:translateY(14px) scale(.98)}}
+}
+:root[data-theme="dark"] .gear-item b{color:var(--accent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gear-item b{color:var(--accent)}}
 
 /* ---------- questions ---------- */
 .faq{padding-block:clamp(40px,5vw,64px)}
@@ -290,11 +320,11 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
 .bar{display:none}
 
 @media (max-width:900px){
-  .hero-grid,.concept-grid,.spots-grid,.rates-grid,.faq-grid,.book-grid{grid-template-columns:1fr}
+  .hero-grid,.concept-grid,.spots-grid,.faq-grid,.book-grid{grid-template-columns:1fr}
   .concept h2,.faq h2{position:static}
   .bento{grid-template-columns:1fr;grid-template-rows:auto}
   .course--main{grid-row:auto;min-height:380px}
-  .courses,.rates{min-height:0;display:block}
+  .courses{min-height:0;display:block}
   .spots-grid{height:auto}
   .map{max-width:340px;width:100%;margin-inline:auto;aspect-ratio:2/3}
 }
@@ -317,8 +347,9 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
   .photos figure:first-child{grid-row:auto;grid-column:1/3;aspect-ratio:16/9}
   .course--photo{padding-right:18px}
   .course--photo img{position:static;width:100%;height:150px;border-radius:10px;margin-bottom:4px}
-  .row{grid-template-columns:1fr;padding:18px 0}
-  .row .price{grid-column:1;grid-row:auto;margin-top:6px}
+  .modal{width:100%;max-width:none;max-height:94dvh;margin:auto 0 0;border-radius:20px 20px 0 0}
+  .facts{grid-template-columns:1fr 1fr}
+  .modal-foot .btn{width:100%}
   form{grid-template-columns:1fr;padding:18px}
   .choices{grid-template-columns:1fr}
   .form-end .btn{width:100%;padding-block:18px}
@@ -347,7 +378,6 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
     <div class="nav-links">
       <a href="#spots">Spots</a>
       <a href="#cours">Cours</a>
-      <a href="#tarifs">Tarifs</a>
       <a href="#questions">Questions</a>
       <a class="btn" href="#reserver">Réserver un cours</a>
     </div>
@@ -363,7 +393,6 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
   <nav aria-label="Menu mobile">
     <a href="#spots">Spots</a>
     <a href="#cours">Cours</a>
-    <a href="#tarifs">Tarifs</a>
     <a href="#questions">Questions</a>
     <a href="#reserver">Réserver</a>
   </nav>
@@ -487,72 +516,38 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
 <section class="courses wrap" id="cours" aria-labelledby="cours-title">
   <div class="courses-head reveal">
     <h2 id="cours-title">Trois façons de surfer avec nous</h2>
-    <p class="lede">Planche incluse dans toutes les formules. Combinaison, gants et chaussons en option.</p>
+    <p class="lede">Planche incluse dans toutes les formules. Combinaison, gants et chaussons en option. Cliquez sur une formule pour le détail et le prix.</p>
+    <p class="season">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      <span>Aujourd’hui&nbsp;: <span class="js-price-season">tarif hors saison</span></span>
+    </p>
   </div>
   <div class="bento">
     <article class="course course--main reveal">
       <img loading="lazy" src="https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1400&q=80&auto=format&fit=crop" alt="Débutant debout sur sa planche dans une petite vague" width="1400" height="933" decoding="async">
-      <h3>Cours collectif</h3>
+      <h3><button class="course-open" type="button" data-modal="modal-collectif">Cours collectif</button></h3>
       <p>Pour découvrir ou reprendre. En petit groupe, on apprend à se lever, à se placer et à lire la vague, avec beaucoup de temps dans l’eau.</p>
       <p class="price"><span class="js-price-collectif">20</span> € <small>par personne, <span class="js-price-season">tarif hors saison</span></small></p>
+      <span class="course-more" aria-hidden="true">Voir le détail</span>
     </article>
     <article class="course course--photo reveal">
       <div class="course-text">
-        <h3>Perfectionnement</h3>
+        <h3><button class="course-open" type="button" data-modal="modal-perf">Perfectionnement</button></h3>
         <p>Pour ceux qui se lèvent déjà. Quatre personnes maximum, travail du take-off, du placement et des premiers virages.</p>
         <p class="price">60&nbsp;€ <small>par personne</small></p>
+        <span class="course-more" aria-hidden="true">Voir le détail</span>
       </div>
       <img loading="lazy" src="https://images.unsplash.com/photo-1455729552865-3658a5d39692?w=600&q=80&auto=format&fit=crop" alt="Surfeur en combinaison qui prend une vague verte" width="600" height="400" decoding="async">
     </article>
     <article class="course course--photo reveal">
       <div class="course-text">
-        <h3>Cours privé + vidéo</h3>
+        <h3><button class="course-open" type="button" data-modal="modal-prive">Cours privé + vidéo</button></h3>
         <p>Seul avec le moniteur. La session est filmée puis débriefée sur la plage, image par image, pour corriger ce qui bloque.</p>
         <p class="price">80&nbsp;€ <small>la séance</small></p>
+        <span class="course-more" aria-hidden="true">Voir le détail</span>
       </div>
       <img loading="lazy" src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=600&q=80&auto=format&fit=crop" alt="Surfeur en haut de la vague, vu depuis la plage" width="600" height="400" decoding="async">
     </article>
-  </div>
-</section>
-
-<!-- ---------- tarifs ---------- -->
-<section class="rates" id="tarifs" aria-labelledby="tarifs-title">
-  <div class="wrap rates-grid">
-    <div class="rates-intro reveal">
-      <h2 id="tarifs-title">Tarifs</h2>
-      <p class="lede">Le cours collectif change de prix avec la saison. Le site affiche automatiquement le tarif en cours.</p>
-      <p class="season">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <span>Aujourd’hui&nbsp;: <span class="js-price-season">tarif hors saison</span></span>
-      </p>
-    </div>
-    <div class="reveal">
-      <ul class="rows">
-        <li class="row">
-          <h3>Cours collectif</h3>
-          <p>20&nbsp;€ d’octobre à mars, 25&nbsp;€ d’avril à fin septembre. Planche incluse.</p>
-          <p class="price"><span class="js-price-collectif">20</span> € <small>/ pers.</small></p>
-        </li>
-        <li class="row">
-          <h3>Perfectionnement</h3>
-          <p>Groupe de 4 personnes maximum. Planche incluse.</p>
-          <p class="price">60&nbsp;€ <small>/ pers.</small></p>
-        </li>
-        <li class="row">
-          <h3>Cours privé + vidéo-analyse</h3>
-          <p>Une personne, session filmée et débriefée.</p>
-          <p class="price">80&nbsp;€</p>
-        </li>
-      </ul>
-      <div class="options">
-        <p>Options matériel, en plus de chaque formule</p>
-        <div class="pills">
-          <span class="pill">Combinaison <b>+5&nbsp;€</b></span>
-          <span class="pill">Gants <b>+1&nbsp;€</b></span>
-          <span class="pill">Chaussons <b>+1&nbsp;€</b></span>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -657,6 +652,97 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
 
 </main>
 
+<!-- ---------- fiches de cours ---------- -->
+<dialog class="modal" id="modal-collectif" data-formule="collectif" data-base="20" aria-labelledby="modal-collectif-title">
+  <div class="modal-head">
+    <img class="modal-img" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1200&q=80&auto=format&fit=crop" alt="" width="1200" height="525">
+  </div>
+    <form method="dialog" class="modal-close-form"><button class="modal-close" type="submit" aria-label="Fermer la fiche"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15"/></svg></button></form>
+  <div class="modal-body">
+    <h3 id="modal-collectif-title">Cours collectif</h3>
+    <p>La formule pour découvrir le surf ou reprendre après une pause. On commence sur le sable par les consignes de sécurité et les gestes du take-off, puis on passe le plus de temps possible dans l’eau, dans les mousses d’abord, puis sur les premières vagues non cassées quand le groupe est prêt. Le moniteur reste dans l’eau avec vous et pousse chaque personne sur ses premières vagues.</p>
+    <dl class="facts">
+      <div><dt>Groupe</dt><dd>8 personnes maximum</dd></div>
+      <div><dt>Niveau</dt><dd>Débutant, reprise</dd></div>
+      <div><dt>Prix</dt><dd><span class="js-price-collectif">20</span>&nbsp;€ par personne</dd></div>
+      <div><dt>Saison</dt><dd><span class="js-price-season">tarif hors saison</span></dd></div>
+    </dl>
+      <fieldset class="gear">
+        <legend>Matériel</legend>
+        <div class="gear-list">
+          <label class="gear-item included"><input type="checkbox" checked disabled> Planche <b>incluse</b></label>
+          <label class="gear-item"><input type="checkbox" name="gear" value="5" data-name="combinaison"> Combinaison <b>+5&nbsp;€</b></label>
+          <label class="gear-item"><input type="checkbox" name="gear" value="1" data-name="gants"> Gants <b>+1&nbsp;€</b></label>
+          <label class="gear-item"><input type="checkbox" name="gear" value="1" data-name="chaussons"> Chaussons <b>+1&nbsp;€</b></label>
+        </div>
+      </fieldset>
+    <div class="modal-foot">
+      <p class="total">Total par personne <b><span class="total-value">20</span>&nbsp;€</b></p>
+      <button class="btn modal-book" type="button">Réserver</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="modal-perf" data-formule="perfectionnement" data-base="60" aria-labelledby="modal-perf-title">
+  <div class="modal-head">
+    <img class="modal-img" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1455729552865-3658a5d39692?w=1200&q=80&auto=format&fit=crop" alt="" width="1200" height="525">
+  </div>
+    <form method="dialog" class="modal-close-form"><button class="modal-close" type="submit" aria-label="Fermer la fiche"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15"/></svg></button></form>
+  <div class="modal-body">
+    <h3 id="modal-perf-title">Perfectionnement</h3>
+    <p>Pour ceux qui se lèvent déjà et veulent passer un cap. En groupe de quatre au maximum, on travaille ce qui bloque le plus souvent à ce stade&nbsp;: le placement au pic, la lecture de la vague, la rame efficace et un take-off plus rapide. On va chercher des vagues non cassées, sur le spot qui offre le meilleur compromis entre taille et propreté ce jour-là.</p>
+    <dl class="facts">
+      <div><dt>Groupe</dt><dd>4 personnes maximum</dd></div>
+      <div><dt>Niveau</dt><dd>Intermédiaire</dd></div>
+      <div><dt>Prix</dt><dd>60&nbsp;€ par personne</dd></div>
+      <div><dt>Saison</dt><dd>Même prix toute l’année</dd></div>
+    </dl>
+      <fieldset class="gear">
+        <legend>Matériel</legend>
+        <div class="gear-list">
+          <label class="gear-item included"><input type="checkbox" checked disabled> Planche <b>incluse</b></label>
+          <label class="gear-item"><input type="checkbox" name="gear" value="5" data-name="combinaison"> Combinaison <b>+5&nbsp;€</b></label>
+          <label class="gear-item"><input type="checkbox" name="gear" value="1" data-name="gants"> Gants <b>+1&nbsp;€</b></label>
+          <label class="gear-item"><input type="checkbox" name="gear" value="1" data-name="chaussons"> Chaussons <b>+1&nbsp;€</b></label>
+        </div>
+      </fieldset>
+    <div class="modal-foot">
+      <p class="total">Total par personne <b><span class="total-value">60</span>&nbsp;€</b></p>
+      <button class="btn modal-book" type="button">Réserver</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal" id="modal-prive" data-formule="prive" data-base="80" aria-labelledby="modal-prive-title">
+  <div class="modal-head">
+    <img class="modal-img" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=1200&q=80&auto=format&fit=crop" alt="" width="1200" height="525">
+  </div>
+    <form method="dialog" class="modal-close-form"><button class="modal-close" type="submit" aria-label="Fermer la fiche"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15"/></svg></button></form>
+  <div class="modal-body">
+    <h3 id="modal-prive-title">Cours privé + vidéo-analyse</h3>
+    <p>Une séance seul avec le moniteur, adaptée à votre niveau, que vous n’ayez jamais surfé ou que vous cherchiez à corriger un détail précis. La session est filmée depuis la plage, puis on regarde les images ensemble à la fin&nbsp;: on voit tout de suite le placement des pieds, le regard, le timing du take-off, et vous repartez avec deux ou trois choses concrètes à travailler. Les vidéos vous sont envoyées après le cours.</p>
+    <dl class="facts">
+      <div><dt>Groupe</dt><dd>1 personne</dd></div>
+      <div><dt>Niveau</dt><dd>Tous niveaux</dd></div>
+      <div><dt>Prix</dt><dd>80&nbsp;€ la séance</dd></div>
+      <div><dt>Saison</dt><dd>Même prix toute l’année</dd></div>
+    </dl>
+      <fieldset class="gear">
+        <legend>Matériel</legend>
+        <div class="gear-list">
+          <label class="gear-item included"><input type="checkbox" checked disabled> Planche <b>incluse</b></label>
+          <label class="gear-item"><input type="checkbox" name="gear" value="5" data-name="combinaison"> Combinaison <b>+5&nbsp;€</b></label>
+          <label class="gear-item"><input type="checkbox" name="gear" value="1" data-name="gants"> Gants <b>+1&nbsp;€</b></label>
+          <label class="gear-item"><input type="checkbox" name="gear" value="1" data-name="chaussons"> Chaussons <b>+1&nbsp;€</b></label>
+        </div>
+      </fieldset>
+    <div class="modal-foot">
+      <p class="total">Total <b><span class="total-value">80</span>&nbsp;€</b></p>
+      <button class="btn modal-book" type="button">Réserver</button>
+    </div>
+  </div>
+</dialog>
+
 <footer>
   <div class="wrap">
     <div>
@@ -739,7 +825,37 @@ function applySeasonPrice(d) {
   const high = isHighSeason(d);
   document.querySelectorAll('.js-price-collectif').forEach(el => { el.textContent = high ? PRICING.collectif.season : PRICING.collectif.offSeason; });
   document.querySelectorAll('.js-price-season').forEach(el => { el.textContent = high ? "tarif saison, d’avril à fin septembre" : "tarif hors saison, d’octobre à mars"; });
+  document.querySelectorAll('.modal[data-formule="collectif"]').forEach(d => { d.dataset.base = high ? PRICING.collectif.season : PRICING.collectif.offSeason; updateTotal(d); });
 }
+/* ---------- fiches de cours ---------- */
+function updateTotal(dialog) {
+  const extra = [...dialog.querySelectorAll('input[name="gear"]:checked')].reduce((sum, c) => sum + Number(c.value), 0);
+  dialog.querySelector('.total-value').textContent = Number(dialog.dataset.base) + extra;
+}
+document.querySelectorAll('.course-open').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const d = document.getElementById(btn.dataset.modal);
+    updateTotal(d);
+    d.showModal();
+  });
+});
+// toute la carte est cliquable, le bouton dans le titre reste l'élément accessible
+document.querySelectorAll('.course').forEach(card => card.addEventListener('click', () => card.querySelector('.course-open').click()));
+document.querySelectorAll('.modal').forEach(d => {
+  d.addEventListener('change', () => updateTotal(d));
+  d.addEventListener('click', e => { if (e.target === d) d.close(); }); // clic sur le fond
+  d.querySelector('.modal-book').addEventListener('click', () => {
+    const radio = document.querySelector(`input[name="formule"][value="${d.dataset.formule}"]`);
+    if (radio) radio.checked = true;
+    const gear = [...d.querySelectorAll('input[name="gear"]:checked')].map(c => c.dataset.name);
+    const msg = document.getElementById('msg');
+    if (msg && gear.length && !msg.value.trim()) msg.value = `Matériel souhaité : ${gear.join(', ')}.`;
+    d.close();
+    document.getElementById('reserver').scrollIntoView();
+    document.getElementById('nb')?.focus({ preventScroll: true });
+  });
+});
 applySeasonPrice();
 window.mojoApplySeasonPrice = applySeasonPrice; // pour tester depuis la console : mojoApplySeasonPrice(new Date(2026,6,1))
 
