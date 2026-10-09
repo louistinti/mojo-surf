@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mojo Surf</title>
 <meta name="description" content="École de surf itinérante en Vendée, toute l'année. Cours à Saint-Gilles-Croix-de-Vie, Bretignolles, les Dunes ou Les Sables-d'Olonne selon les conditions.">
+<meta name="theme-color" content="#f5ecdb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23bf4620'/%3E%3Cpath d='M4 19c4 0 4-6 8-6s4 6 8 6 4-6 8-6' fill='none' stroke='%23fff7ef' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,6 +53,10 @@
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+a,button,summary,label,input,select,textarea{touch-action:manipulation}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:var(--gutter);top:-100px;z-index:50;padding:12px 16px;border-radius:999px;background:var(--fg);color:var(--bg);font-weight:700;text-decoration:none}
+.skip:focus{top:12px}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--fg);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
 img{max-width:100%;display:block}
@@ -61,7 +67,7 @@ a{color:inherit}
 h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-.02em;margin:0;text-wrap:balance}
 h2{font-size:clamp(34px,4.6vw,58px)}
 h3{font-size:clamp(22px,2.2vw,28px);font-weight:700}
-p{margin:0}
+p{margin:0;text-wrap:pretty}
 section{scroll-margin-top:72px}
 .lede{font-size:clamp(17px,1.4vw,20px);color:var(--fg-2);max-width:56ch}
 
@@ -159,7 +165,7 @@ section{scroll-margin-top:72px}
 .arrow:hover{background:var(--fg);color:var(--bg)}
 .arrow:active{transform:scale(.95)}
 .arrow svg{width:20px;height:20px}
-.counter{font-family:var(--display);font-weight:700;font-size:18px;color:var(--fg-2)}
+.counter{font-family:var(--display);font-weight:700;font-size:18px;color:var(--fg-2);font-variant-numeric:tabular-nums}
 .counter b{color:var(--fg)}
 
 /* ---------- les cours ---------- */
@@ -177,7 +183,7 @@ section{scroll-margin-top:72px}
 .course--photo{padding-right:calc(150px + clamp(22px,2.4vw,32px))}
 .course--photo .course-text{display:flex;flex-direction:column;gap:10px}
 .course--photo img{position:absolute;top:0;right:0;bottom:0;width:150px;height:100%;object-fit:cover}
-.price{font-family:var(--display);font-weight:800;font-size:clamp(28px,2.6vw,36px);letter-spacing:-.02em;line-height:1;display:flex;align-items:baseline;gap:8px}
+.price{font-family:var(--display);font-weight:800;font-variant-numeric:tabular-nums;font-size:clamp(28px,2.6vw,36px);letter-spacing:-.02em;line-height:1;display:flex;align-items:baseline;gap:8px}
 .price small{font:600 14px var(--body);color:inherit;opacity:.8}
 .course--main .price{color:#ffd9c8}
 .course:not(.course--main) .price{color:var(--accent)}
@@ -219,8 +225,8 @@ section{scroll-margin-top:72px}
 .book{padding-block:clamp(40px,5vw,64px);background:var(--bg-2)}
 .book-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(28px,5vw,80px);align-items:start}
 .book-intro{display:flex;flex-direction:column;gap:18px}
-.contact{display:flex;flex-direction:column;gap:6px;color:var(--fg-2);font-size:16px;padding-top:18px;border-top:1px solid var(--line)}
-.contact a{text-decoration:none;font-weight:700;color:var(--fg)}
+.contact{display:flex;flex-direction:column;gap:0;color:var(--fg-2);font-size:16px;padding-top:18px;border-top:1px solid var(--line)}
+.contact a{text-decoration:none;font-weight:700;color:var(--fg);display:inline-flex;align-items:center;min-height:44px;align-self:flex-start}
 .contact a:hover{color:var(--accent-2)}
 form{display:grid;grid-template-columns:1fr 1fr;gap:20px 18px;background:var(--bg);padding:clamp(20px,2.4vw,32px);border-radius:calc(var(--radius) + 8px)}
 .field{display:flex;flex-direction:column;gap:6px}
@@ -228,7 +234,7 @@ form{display:grid;grid-template-columns:1fr 1fr;gap:20px 18px;background:var(--b
 label,legend{font-weight:700;font-size:15px}
 .hint{font-size:13px;color:var(--fg-2)}
 input,select,textarea{font:inherit;color:var(--fg);background:var(--bg-2);border:2px solid transparent;border-radius:10px;padding:12px 14px;width:100%;min-height:48px}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent);background:var(--bg)}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:none;border-color:var(--accent);background:var(--bg);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent)}
 textarea{resize:vertical;min-height:120px}
 .field.error input,.field.error select{border-color:var(--accent)}
 .err{display:none;font-size:13px;font-weight:600;color:var(--accent-2)}
@@ -245,12 +251,13 @@ fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:10px
 .choice span{font-size:13px;color:var(--fg-2)}
 .form-end{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-top:4px}
 .form-end .hint{flex:1;min-width:200px}
-.sent{grid-column:1/-1;background:var(--bg-2);padding:18px 20px;border-radius:12px;font-weight:600}
+.sent{grid-column:1/-1;margin:0;background:var(--bg-2);padding:18px 20px;border-radius:12px;font-weight:600}
 
 /* ---------- pied de page ---------- */
 footer{padding-block:36px calc(36px + env(safe-area-inset-bottom,0px))}
-footer .wrap{display:flex;justify-content:space-between;gap:16px 32px;flex-wrap:wrap;font-size:15px;color:var(--fg-2)}
-footer a{text-decoration:none}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:8px 32px;flex-wrap:wrap;font-size:15px;color:var(--fg-2)}
+footer a{text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+footer .brand{color:var(--fg)}
 footer a:hover{color:var(--fg)}
 footer .places{display:flex;gap:16px;flex-wrap:wrap}
 
@@ -266,7 +273,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
 
 /* ---------- mobile : menu plein écran et barre de réservation ---------- */
 .menu-btn{display:none;font:700 15px/1 var(--body);background:none;border:0;color:var(--fg);min-height:44px;padding:0 0 0 16px;cursor:pointer}
-.menu{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column;
+.menu{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column;overscroll-behavior:contain;
   padding:env(safe-area-inset-top,0px) var(--gutter) calc(24px + env(safe-area-inset-bottom,0px))}
 .menu-top{display:flex;justify-content:space-between;align-items:center;height:68px}
 .menu nav{display:flex;flex-direction:column;gap:6px;margin-top:auto}
@@ -327,12 +334,13 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
 </style>
 </head>
 <body id="top">
+<a class="skip" href="#main">Aller au contenu</a>
 
 <nav class="nav" aria-label="Navigation">
   <div class="wrap">
     <a class="logo" href="#top" aria-label="Mojo Surf, retour en haut">
       <svg viewBox="0 0 30 20" aria-hidden="true"><path d="M1 14c4 0 4-5 8-5s4 5 8 5 4-5 8-5 4 5 4 5" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/></svg>
-      Mojo Surf
+      <span translate="no">Mojo Surf</span>
     </a>
     <div class="nav-links">
       <a href="#spots">Spots</a>
@@ -347,7 +355,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
 
 <div class="menu" id="menu" hidden role="dialog" aria-modal="true" aria-label="Menu">
   <div class="menu-top">
-    <span class="logo">Mojo Surf</span>
+    <span class="logo" translate="no">Mojo Surf</span>
     <button class="menu-btn" type="button" id="menu-close">Fermer</button>
   </div>
   <nav aria-label="Menu mobile">
@@ -363,23 +371,24 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
   </div>
 </div>
 
+<main id="main">
 <!-- ---------- ouverture ---------- -->
 <header class="hero wrap">
   <div class="hero-grid">
     <div class="hero-text">
-      <h1>Du surf toute l'année, <em>là où sont les vagues.</em></h1>
-      <p class="lede">École de surf itinérante en Vendée. Chaque jour, on choisit le spot qui a les meilleures conditions, de Saint-Gilles aux Sables-d'Olonne.</p>
+      <h1>Du surf toute l’année, <em>là où sont les vagues.</em></h1>
+      <p class="lede">École de surf itinérante en Vendée. Chaque jour, on choisit le spot qui a les meilleures conditions, de Saint-Gilles aux Sables-d’Olonne.</p>
       <div class="hero-ctas">
         <a class="btn" href="#reserver">Réserver un cours</a>
         <a class="btn btn-ghost" href="#spots">Voir les spots</a>
       </div>
     </div>
     <div class="hero-img">
-      <img src="https://images.unsplash.com/photo-1520116468816-95b69f847357?w=1400&q=80&auto=format&fit=crop" alt="Van orange chargé de planches de surf sur le toit, garé face à la plage" fetchpriority="high">
+      <img src="https://images.unsplash.com/photo-1520116468816-95b69f847357?w=1400&q=80&auto=format&fit=crop" alt="Van orange chargé de planches de surf sur le toit, garé face à la plage" width="1400" height="1750" fetchpriority="high" decoding="async">
     </div>
   </div>
   <div class="marks">
-    <div class="mark"><strong>Toute l'année</strong><span>Été comme hiver, combinaison fournie</span></div>
+    <div class="mark"><strong>Toute l’année</strong><span>Été comme hiver, combinaison fournie</span></div>
     <div class="mark"><strong>4 spots</strong><span>Choisis chaque jour selon les conditions</span></div>
     <div class="mark"><strong>Tous niveaux</strong><span>Surtout débutants et intermédiaires</span></div>
   </div>
@@ -394,21 +403,21 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
         <span class="point-num" aria-hidden="true">1</span>
         <div>
           <h3>Le spot se choisit le matin</h3>
-          <p>Vent, houle, marée : le moniteur lit les conditions et vous donne rendez-vous sur la plage où les vagues seront les plus adaptées au groupe. Le lieu est confirmé la veille.</p>
+          <p>Vent, houle, marée&nbsp;: le moniteur lit les conditions et vous donne rendez-vous sur la plage où les vagues seront les plus adaptées au groupe. Le lieu est confirmé la veille.</p>
         </div>
       </li>
       <li class="point reveal">
         <span class="point-num" aria-hidden="true">2</span>
         <div>
           <h3>Été comme hiver</h3>
-          <p>L'école tourne douze mois sur douze. Combinaison, gants et chaussons sont disponibles pour surfer au chaud, même en janvier, quand les plages sont vides et les vagues souvent meilleures.</p>
+          <p>L’école tourne douze mois sur douze. Combinaison, gants et chaussons sont disponibles pour surfer au chaud, même en janvier, quand les plages sont vides et les vagues souvent meilleures.</p>
         </div>
       </li>
       <li class="point reveal">
         <span class="point-num" aria-hidden="true">3</span>
         <div>
           <h3>Pensé pour débuter et progresser</h3>
-          <p>Petits groupes, consignes simples, beaucoup de temps dans l'eau. Les débutants se lèvent dès la première séance, les intermédiaires travaillent le take-off et la lecture de vague.</p>
+          <p>Petits groupes, consignes simples, beaucoup de temps dans l’eau. Les débutants se lèvent dès la première séance, les intermédiaires travaillent le take-off et la lecture de vague.</p>
         </div>
       </li>
     </ol>
@@ -424,7 +433,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
     </div>
     <div class="spots-grid">
       <div class="map reveal">
-        <!-- Carte illustrée. Les positions des spots viennent du tableau SPOTS dans le script : le dessin peut être remplacé sans toucher à la logique. -->
+        <!-- Carte illustrée. Les positions des spots viennent du tableau SPOTS dans le script&nbsp;: le dessin peut être remplacé sans toucher à la logique. -->
         <svg id="map" viewBox="0 0 400 600" preserveAspectRatio="xMidYMid meet" role="group" aria-label="Carte des quatre spots, du nord au sud">
           <rect width="2000" height="600" fill="var(--sea)"/>
           <g aria-hidden="true">
@@ -465,7 +474,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4l6 6-6 6"/></svg>
             </button>
           </div>
-          <p class="counter" aria-live="polite"><b id="count-cur">1</b> / <span id="count-total">4</span></p>
+          <p class="counter"><span class="sr-only" id="count-name" aria-live="polite"></span><b id="count-cur" aria-hidden="true">1</b><span aria-hidden="true"> / </span><span id="count-total" aria-hidden="true">4</span></p>
         </div>
       </div>
     </div>
@@ -480,26 +489,26 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
   </div>
   <div class="bento">
     <article class="course course--main reveal">
-      <img loading="lazy" src="https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1400&q=80&auto=format&fit=crop" alt="Débutant debout sur sa planche dans une petite vague">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1400&q=80&auto=format&fit=crop" alt="Débutant debout sur sa planche dans une petite vague" width="1400" height="933" decoding="async">
       <h3>Cours collectif</h3>
-      <p>Pour découvrir ou reprendre. En petit groupe, on apprend à se lever, à se placer et à lire la vague, avec beaucoup de temps dans l'eau.</p>
+      <p>Pour découvrir ou reprendre. En petit groupe, on apprend à se lever, à se placer et à lire la vague, avec beaucoup de temps dans l’eau.</p>
       <p class="price"><span class="js-price-collectif">20</span> € <small>par personne, <span class="js-price-season">tarif hors saison</span></small></p>
     </article>
     <article class="course course--photo reveal">
       <div class="course-text">
         <h3>Perfectionnement</h3>
         <p>Pour ceux qui se lèvent déjà. Quatre personnes maximum, travail du take-off, du placement et des premiers virages.</p>
-        <p class="price">60 € <small>par personne</small></p>
+        <p class="price">60&nbsp;€ <small>par personne</small></p>
       </div>
-      <img loading="lazy" src="https://images.unsplash.com/photo-1455729552865-3658a5d39692?w=600&q=80&auto=format&fit=crop" alt="Surfeur en combinaison qui prend une vague verte">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1455729552865-3658a5d39692?w=600&q=80&auto=format&fit=crop" alt="Surfeur en combinaison qui prend une vague verte" width="600" height="400" decoding="async">
     </article>
     <article class="course course--photo reveal">
       <div class="course-text">
         <h3>Cours privé + vidéo</h3>
         <p>Seul avec le moniteur. La session est filmée puis débriefée sur la plage, image par image, pour corriger ce qui bloque.</p>
-        <p class="price">80 € <small>la séance</small></p>
+        <p class="price">80&nbsp;€ <small>la séance</small></p>
       </div>
-      <img loading="lazy" src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=600&q=80&auto=format&fit=crop" alt="Surfeur en haut de la vague, vu depuis la plage">
+      <img loading="lazy" src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=600&q=80&auto=format&fit=crop" alt="Surfeur en haut de la vague, vu depuis la plage" width="600" height="400" decoding="async">
     </article>
   </div>
 </section>
@@ -512,33 +521,33 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
       <p class="lede">Le cours collectif change de prix avec la saison. Le site affiche automatiquement le tarif en cours.</p>
       <p class="season">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        <span>Aujourd'hui : <span class="js-price-season">tarif hors saison</span></span>
+        <span>Aujourd’hui&nbsp;: <span class="js-price-season">tarif hors saison</span></span>
       </p>
     </div>
     <div class="reveal">
       <ul class="rows">
         <li class="row">
           <h3>Cours collectif</h3>
-          <p>20 € d'octobre à mars, 25 € d'avril à fin septembre. Planche incluse.</p>
+          <p>20&nbsp;€ d’octobre à mars, 25&nbsp;€ d’avril à fin septembre. Planche incluse.</p>
           <p class="price"><span class="js-price-collectif">20</span> € <small>/ pers.</small></p>
         </li>
         <li class="row">
           <h3>Perfectionnement</h3>
           <p>Groupe de 4 personnes maximum. Planche incluse.</p>
-          <p class="price">60 € <small>/ pers.</small></p>
+          <p class="price">60&nbsp;€ <small>/ pers.</small></p>
         </li>
         <li class="row">
           <h3>Cours privé + vidéo-analyse</h3>
           <p>Une personne, session filmée et débriefée.</p>
-          <p class="price">80 €</p>
+          <p class="price">80&nbsp;€</p>
         </li>
       </ul>
       <div class="options">
         <p>Options matériel, en plus de chaque formule</p>
         <div class="pills">
-          <span class="pill">Combinaison <b>+5 €</b></span>
-          <span class="pill">Gants <b>+1 €</b></span>
-          <span class="pill">Chaussons <b>+1 €</b></span>
+          <span class="pill">Combinaison <b>+5&nbsp;€</b></span>
+          <span class="pill">Gants <b>+1&nbsp;€</b></span>
+          <span class="pill">Chaussons <b>+1&nbsp;€</b></span>
         </div>
       </div>
     </div>
@@ -551,28 +560,28 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
     <h2 id="faq-title" class="reveal">Questions</h2>
     <div class="reveal">
       <details>
-        <summary>Faut-il savoir nager ?</summary>
-        <p>Oui. Il faut savoir nager 25 mètres et être à l'aise dans l'eau. C'est la seule condition pour un cours collectif.</p>
+        <summary>Faut-il savoir nager&nbsp;?</summary>
+        <p>Oui. Il faut savoir nager 25 mètres et être à l’aise dans l’eau. C’est la seule condition pour un cours collectif.</p>
       </details>
       <details>
-        <summary>À partir de quel âge ?</summary>
+        <summary>À partir de quel âge&nbsp;?</summary>
         <p>À partir de 8 ans en cours collectif. Les mineurs viennent avec un adulte qui reste sur la plage pendant la séance.</p>
       </details>
       <details>
-        <summary>Qu'est-ce que j'apporte ?</summary>
-        <p>Un maillot, une serviette, de l'eau et de la crème solaire. La planche est incluse, la combinaison se loue 5 € et les gants ou chaussons 1 € chacun.</p>
+        <summary>Qu’est-ce que j’apporte&nbsp;?</summary>
+        <p>Un maillot, une serviette, de l’eau et de la crème solaire. La planche est incluse, la combinaison se loue 5&nbsp;€ et les gants ou chaussons 1&nbsp;€ chacun.</p>
       </details>
       <details>
-        <summary>Comment je sais où est le rendez-vous ?</summary>
-        <p>Le spot dépend des conditions du jour. Vous recevez un message la veille au soir avec la plage, l'heure et l'endroit exact où trouver le camion.</p>
+        <summary>Comment je sais où est le rendez-vous&nbsp;?</summary>
+        <p>Le spot dépend des conditions du jour. Vous recevez un message la veille au soir avec la plage, l’heure et l’endroit exact où trouver le camion.</p>
       </details>
       <details>
-        <summary>Et s'il n'y a pas de vagues ?</summary>
-        <p>Si aucun des quatre spots ne fonctionne, le cours est reporté à une autre date, sans frais. C'est rare : c'est justement l'intérêt de se déplacer.</p>
+        <summary>Et s’il n’y a pas de vagues&nbsp;?</summary>
+        <p>Si aucun des quatre spots ne fonctionne, le cours est reporté à une autre date, sans frais. C’est rare&nbsp;: c’est justement l’intérêt de se déplacer.</p>
       </details>
       <details>
-        <summary>Comment on paie ?</summary>
-        <p>Sur place le jour du cours, en espèces ou par virement. Aucun acompte n'est demandé à la réservation.</p>
+        <summary>Comment on paie&nbsp;?</summary>
+        <p>Sur place le jour du cours, en espèces ou par virement. Aucun acompte n’est demandé à la réservation.</p>
       </details>
     </div>
   </div>
@@ -583,7 +592,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
   <div class="wrap book-grid">
     <div class="book-intro reveal">
       <h2 id="book-title">Réserver un cours</h2>
-      <p class="lede">Dites-nous quand vous voulez surfer et avec qui. On vous répond sous 24 h avec les créneaux possibles, puis le spot est confirmé la veille.</p>
+      <p class="lede">Dites-nous quand vous voulez surfer et avec qui. On vous répond sous 24&nbsp;h avec les créneaux possibles, puis le spot est confirmé la veille.</p>
       <div class="contact">
         <span>Par téléphone ou par mail, ça marche aussi.</span>
         <a href="tel:+33614263642">06 14 26 36 42</a>
@@ -595,14 +604,14 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
         <legend>Formule</legend>
         <div class="choices">
           <label class="choice"><input type="radio" name="formule" value="collectif"><strong>Cours collectif</strong><span><span class="js-price-collectif">20</span> € par personne</span></label>
-          <label class="choice"><input type="radio" name="formule" value="perfectionnement"><strong>Perfectionnement</strong><span>60 € par personne, 4 max</span></label>
-          <label class="choice"><input type="radio" name="formule" value="prive"><strong>Privé + vidéo</strong><span>80 € la séance</span></label>
+          <label class="choice"><input type="radio" name="formule" value="perfectionnement"><strong>Perfectionnement</strong><span>60&nbsp;€ par personne, 4 max</span></label>
+          <label class="choice"><input type="radio" name="formule" value="prive"><strong>Privé + vidéo</strong><span>80&nbsp;€ la séance</span></label>
         </div>
-        <span class="err">Choisissez une formule.</span>
+        <span class="err" id="err-formule">Choisissez une formule.</span>
       </fieldset>
       <div class="field">
         <label for="nb">Nombre de personnes</label>
-        <input id="nb" name="personnes" type="number" min="1" max="8" value="1" inputmode="numeric">
+        <input id="nb" name="personnes" type="number" min="1" max="8" value="1" inputmode="numeric" autocomplete="off">
       </div>
       <div class="field">
         <label for="niveau">Niveau</label>
@@ -614,45 +623,47 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
       </div>
       <div class="field">
         <label for="date">Date souhaitée</label>
-        <input id="date" name="date" type="date">
-        <span class="hint">Indicative, on ajuste selon les marées.</span>
+        <input id="date" name="date" type="date" aria-describedby="hint-date">
+        <span class="hint" id="hint-date">Indicative, on ajuste selon les marées.</span>
       </div>
       <div class="field">
         <label for="nom">Nom</label>
-        <input id="nom" name="nom" type="text" autocomplete="name">
-        <span class="err">Indiquez votre nom.</span>
+        <input id="nom" name="nom" type="text" autocomplete="name" aria-describedby="err-nom">
+        <span class="err" id="err-nom">Indiquez votre nom.</span>
       </div>
       <div class="field">
         <label for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" inputmode="email">
-        <span class="err">Indiquez un email ou un téléphone.</span>
+        <input id="email" name="email" type="email" autocomplete="email" inputmode="email" aria-describedby="err-email">
+        <span class="err" id="err-email">Indiquez un email ou un téléphone.</span>
       </div>
       <div class="field">
         <label for="tel">Téléphone</label>
-        <input id="tel" name="telephone" type="tel" autocomplete="tel" inputmode="tel">
-        <span class="hint">Pour le message de la veille.</span>
+        <input id="tel" name="telephone" type="tel" autocomplete="tel" inputmode="tel" aria-describedby="hint-tel">
+        <span class="hint" id="hint-tel">Pour le message de la veille.</span>
       </div>
       <div class="field full">
         <label for="msg">Message</label>
-        <textarea id="msg" name="message" placeholder="Horaires qui vous arrangent, question sur le matériel, groupe d'amis..."></textarea>
+        <textarea id="msg" name="message" placeholder="Horaires qui vous arrangent, question sur le matériel, groupe d’amis…"></textarea>
       </div>
       <div class="form-end">
         <button class="btn" type="submit">Envoyer la demande</button>
-        <span class="hint">Aucun paiement en ligne. Réponse sous 24 h.</span>
+        <span class="hint">Aucun paiement en ligne. Réponse sous 24&nbsp;h.</span>
       </div>
     </form>
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap">
     <div>
-      <strong style="color:var(--fg)">Mojo Surf</strong>, école de surf itinérante en Vendée
+      <strong class="brand" translate="no">Mojo Surf</strong>, école de surf itinérante en Vendée
     </div>
     <div class="places">
       <span>Saint-Gilles-Croix-de-Vie</span>
       <span>Bretignolles-sur-Mer</span>
-      <span>Les Sables-d'Olonne</span>
+      <span>Les Sables-d’Olonne</span>
     </div>
     <div>
       <a href="https://www.facebook.com/mojosurfschool/" rel="noopener">Facebook</a>
@@ -661,7 +672,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
 </footer>
 
 <div class="bar" id="bar">
-  <p><strong>Réserver un cours</strong>Réponse sous 24 h</p>
+  <p><strong>Réserver un cours</strong>Réponse sous 24&nbsp;h</p>
   <a class="btn" href="#reserver">Réserver</a>
 </div>
 
@@ -697,7 +708,7 @@ const SPOTS = [
   },
   {
     id: 'dunes', name: 'Les Dunes', place: 'Bretignolles-sur-Mer', x: 176, y: 322,
-    text: "Grande plage de sable derrière le cordon dunaire, face à l'océan. Elle prend bien la houle et fonctionne sur beaucoup de marées : c'est souvent là que le camion s'arrête.",
+    text: "Grande plage de sable derrière le cordon dunaire, face à l’océan. Elle prend bien la houle et fonctionne sur beaucoup de marées : c’est souvent là que le camion s’arrête.",
     photos: [
       ['1473116763249-2faaef81ccda', 'Plage et vagues au soleil couchant'],
       ['1505142468610-359e7d316be0', 'Plage et écume vues du ciel'],
@@ -705,8 +716,8 @@ const SPOTS = [
     ]
   },
   {
-    id: 'sables', name: "Les Sables-d'Olonne", place: 'Grande Plage', x: 246, y: 500,
-    text: "La grande baie offre des vagues plus calmes quand ça rentre fort ailleurs. L'option tranquille pour les jours de grosse houle ou de vent d'ouest.",
+    id: 'sables', name: "Les Sables-d’Olonne", place: 'Grande Plage', x: 246, y: 500,
+    text: "La grande baie offre des vagues plus calmes quand ça rentre fort ailleurs. L’option tranquille pour les jours de grosse houle ou de vent d’ouest.",
     photos: [
       ['1509914398892-963f53e6e2f1', 'Surfeur assis sur sa planche au coucher du soleil'],
       ['1510414842594-a61c69b5ae57', 'Crique et eau turquoise vue depuis la falaise'],
@@ -725,7 +736,7 @@ function isHighSeason(d = new Date()) {
 function applySeasonPrice(d) {
   const high = isHighSeason(d);
   document.querySelectorAll('.js-price-collectif').forEach(el => { el.textContent = high ? PRICING.collectif.season : PRICING.collectif.offSeason; });
-  document.querySelectorAll('.js-price-season').forEach(el => { el.textContent = high ? "tarif saison, d'avril à fin septembre" : "tarif hors saison, d'octobre à mars"; });
+  document.querySelectorAll('.js-price-season').forEach(el => { el.textContent = high ? "tarif saison, d’avril à fin septembre" : "tarif hors saison, d’octobre à mars"; });
 }
 applySeasonPrice();
 window.mojoApplySeasonPrice = applySeasonPrice; // pour tester depuis la console : mojoApplySeasonPrice(new Date(2026,6,1))
@@ -740,7 +751,7 @@ document.getElementById('count-total').textContent = SPOTS.length;
 let current = 0;
 
 function img(id, alt, w) {
-  return `<img loading="lazy" src="https://images.unsplash.com/photo-${id}?w=${w}&q=75&auto=format&fit=crop" alt="${alt}">`;
+  return `<img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-${id}?w=${w}&q=75&auto=format&fit=crop" alt="${alt}">`;
 }
 
 SPOTS.forEach((s, i) => {
@@ -785,13 +796,14 @@ function setSpot(i) {
     p.querySelectorAll('img').forEach(im => im.toggleAttribute('inert', k !== current));
   });
   pins.querySelectorAll('.spot-pin').forEach((p, k) => p.setAttribute('aria-pressed', k === current ? 'true' : 'false'));
-  // le camion se gare au-dessus du point, côté terre, sans couvrir l'étiquette
+  // le camion se gare au-dessus du point, côté terre, sans couvrir l’étiquette
   van.style.transform = `translate(${s.x + 28}px, ${s.y - 26}px)`;
   countCur.textContent = current + 1;
+  document.getElementById('count-name').textContent = `Spot ${current + 1} sur ${SPOTS.length} : ${s.name}`;
 }
 setSpot(0);
 
-// Le dessin fait 400 x 600. Si la case est plus large que 2/3, on montre plus de terre à droite plutôt que d'étirer.
+// Le dessin fait 400 x 600. Si la case est plus large que 2/3, on montre plus de terre à droite plutôt que d’étirer.
 const mapSvg = document.getElementById('map');
 function fitMap() {
   const r = mapSvg.parentElement.getBoundingClientRect();
@@ -837,7 +849,16 @@ function toggleMenu(open) {
 menuOpen.addEventListener('click', () => toggleMenu(true));
 document.getElementById('menu-close').addEventListener('click', () => toggleMenu(false));
 menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) toggleMenu(false); });
+document.addEventListener('keydown', e => {
+  if (menu.hidden) return;
+  if (e.key === 'Escape') toggleMenu(false);
+  if (e.key === 'Tab') {
+    const f = menu.querySelectorAll('a, button');
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+});
 
 /* ---------- barre de réservation mobile : masquée quand le formulaire est visible ---------- */
 const bar = document.getElementById('bar');
@@ -857,19 +878,20 @@ form.addEventListener('submit', e => {
   const nom = document.getElementById('nom');
   const nomField = nom.closest('.field');
   const nomOk = nom.value.trim().length > 1;
-  nomField.classList.toggle('error', !nomOk); if (!nomOk) ok = false;
+  nomField.classList.toggle('error', !nomOk); nom.setAttribute('aria-invalid', String(!nomOk)); if (!nomOk) ok = false;
 
   const email = document.getElementById('email'), tel = document.getElementById('tel');
   const contactOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim()) || tel.value.replace(/\D/g, '').length >= 9;
-  email.closest('.field').classList.toggle('error', !contactOk); if (!contactOk) ok = false;
+  email.closest('.field').classList.toggle('error', !contactOk); email.setAttribute('aria-invalid', String(!contactOk)); if (!contactOk) ok = false;
 
   if (!ok) { form.querySelector('.error input, .error select')?.focus(); return; }
 
   const name = nom.value.trim().split(' ')[0];
-  form.innerHTML = `<p class="sent">Merci ${name}. Votre demande est notée, on vous répond sous 24 h. (Démo : rien n'a été envoyé, le formulaire n'est pas encore branché.)</p>`;
+  form.innerHTML = `<p class="sent" role="status">Merci ${name}. Votre demande est notée, on vous répond sous 24 h. (Démo : rien n’a été envoyé, le formulaire n’est pas encore branché.)</p>`;
 });
 form.addEventListener('input', e => {
   const f = e.target.closest('.field, fieldset'); if (f) f.classList.remove('error');
+  if (e.target.hasAttribute('aria-invalid')) e.target.setAttribute('aria-invalid', 'false');
 });
 </script>
 </body>
