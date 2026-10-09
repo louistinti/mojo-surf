@@ -216,7 +216,9 @@ section{scroll-margin-top:72px}
 .modal-img{width:100%;aspect-ratio:16/7;object-fit:cover}
 .modal-close-form{position:absolute;top:12px;right:12px;z-index:2;margin:0;display:block;padding:0;background:none;border-radius:0;width:auto;line-height:0}
 .modal-close{width:44px;height:44px;border-radius:999px;border:0;background:var(--bg);color:var(--fg);display:grid;place-items:center;cursor:pointer;box-shadow:var(--shadow)}
-.modal-close:hover{background:var(--fg);color:var(--bg)}
+.modal-close:hover,.modal-close:focus-visible{background:var(--fg);color:var(--bg)}
+.modal-close:focus,.modal-close:focus-visible{outline:none}
+.modal:focus,.modal:focus-visible{outline:none}
 .modal-close svg{width:18px;height:18px}
 .modal-body{padding:clamp(20px,3vw,28px);display:flex;flex-direction:column;gap:16px}
 .modal-body h3{font-size:clamp(26px,3vw,34px)}
@@ -654,7 +656,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
 </main>
 
 <!-- ---------- fiches de cours ---------- -->
-<dialog class="modal" id="modal-collectif" data-formule="collectif" data-base="20" aria-labelledby="modal-collectif-title">
+<dialog class="modal" autofocus id="modal-collectif" data-formule="collectif" data-base="20" aria-labelledby="modal-collectif-title">
   <div class="modal-head">
     <img class="modal-img" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1502933691298-84fc14542831?w=1200&q=80&auto=format&fit=crop" alt="" width="1200" height="525">
   </div>
@@ -684,7 +686,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
   </div>
 </dialog>
 
-<dialog class="modal" id="modal-perf" data-formule="perfectionnement" data-base="60" aria-labelledby="modal-perf-title">
+<dialog class="modal" autofocus id="modal-perf" data-formule="perfectionnement" data-base="60" aria-labelledby="modal-perf-title">
   <div class="modal-head">
     <img class="modal-img" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1455729552865-3658a5d39692?w=1200&q=80&auto=format&fit=crop" alt="" width="1200" height="525">
   </div>
@@ -714,7 +716,7 @@ footer .places{display:flex;gap:16px;flex-wrap:wrap}
   </div>
 </dialog>
 
-<dialog class="modal" id="modal-prive" data-formule="prive" data-base="80" aria-labelledby="modal-prive-title">
+<dialog class="modal" autofocus id="modal-prive" data-formule="prive" data-base="80" aria-labelledby="modal-prive-title">
   <div class="modal-head">
     <img class="modal-img" loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=1200&q=80&auto=format&fit=crop" alt="" width="1200" height="525">
   </div>
