@@ -17,6 +17,9 @@
   --card-soft: rgba(255, 255, 255, .82);
   --line: #e6e9f0;
   --star: #a9750f;
+  --accent-text: #a8333f;
+  --footer: #1f2a55;
+  --logo-chip: transparent;
   --nav-bg: rgba(255, 255, 255, .92);
   --veil: linear-gradient(180deg, rgba(0, 0, 0, .08) 35%, rgba(20, 25, 50, .66));
   --shadow: 0 18px 40px -28px rgba(31, 42, 85, .35);
@@ -58,7 +61,7 @@ h2 { font-size: clamp(34px, 4vw, 52px); }
 /* Bandeau */
 .nav { position: sticky; top: 0; z-index: 20; background: var(--nav-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .nav-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: var(--nav-h); }
-.brand { display: block; flex: none; border-radius: 10px; }
+.brand { display: block; flex: none; border-radius: 14px; background: var(--logo-chip); }
 .brand img { height: 76px; width: auto; }
 .nav-links { display: flex; gap: 28px; margin-left: auto; }
 .nav-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); font-size: 16px; text-decoration: none; transition: color .2s; }
@@ -70,7 +73,7 @@ h2 { font-size: clamp(34px, 4vw, 52px); }
 /* Menu mobile plein écran */
 .menu { position: fixed; inset: 0; z-index: 40; display: flex; flex-direction: column; background: var(--page); overscroll-behavior: contain; padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
 .menu-top { display: flex; align-items: center; justify-content: space-between; height: 72px; width: 100%; }
-.menu-logo { height: 52px; width: auto; }
+.menu-logo { height: 52px; width: auto; border-radius: 12px; background: var(--logo-chip); }
 .menu-close { min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--navy); font: 600 16px var(--font); cursor: pointer; }
 .menu-links { display: flex; flex-direction: column; gap: 4px; margin-top: auto; width: 100%; }
 .menu-links a { display: flex; align-items: center; min-height: 56px; font-size: clamp(38px, 11vw, 56px); font-weight: 700; letter-spacing: -.03em; text-decoration: none; }
@@ -141,7 +144,7 @@ h2 { font-size: clamp(34px, 4vw, 52px); }
 .gear-label, .contact-label { margin-top: 22px; color: var(--ink); font-size: 14px; }
 .gear { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
 .gear li { padding: 9px 16px; border-radius: 999px; background: var(--card); font-size: 15px; }
-.gear b { color: var(--red); font-weight: 600; }
+.gear b { color: var(--accent-text); font-weight: 600; }
 .contact-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
 
 /* Avis */
@@ -181,12 +184,42 @@ h2 { font-size: clamp(34px, 4vw, 52px); }
 .faq-list details p { padding: 0 0 22px; max-width: 62ch; color: var(--ink); }
 
 /* Pied de page */
-.footer { background: var(--navy); color: #dfe5f5; padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0px)); }
+.footer { background: var(--footer); color: #dfe5f5; padding: 28px 0 calc(28px + env(safe-area-inset-bottom, 0px)); }
 .footer-row { display: flex; justify-content: space-between; align-items: center; gap: 12px 24px; flex-wrap: wrap; }
 .footer b { color: #fff; }
 .footer-contacts { display: flex; gap: 20px; flex-wrap: wrap; }
 .footer-contacts a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
 .footer-contacts a:hover { text-decoration: underline; }
+
+/* Mode sombre automatique, adouci : bleu nuit doux, pastels assombris, rouge camion conservé sur l'action */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --navy: #eef1f8;
+    --ink: #aeb7d2;
+    --ink-2: #d3d9ea;
+    --page: #141a2e;
+    --lagoon: #1b3340;
+    --lagoon-dot: #6fb8bc;
+    --sand: #1f2436;
+    --sun: #3a3520;
+    --sky: #1c2338;
+    --chip: #242c46;
+    --card: #1c2338;
+    --card-soft: rgba(28, 35, 56, .88);
+    --line: #2b3452;
+    --star: #e2b453;
+    --accent-text: #f29aa2;
+    --footer: #0e1322;
+    --logo-chip: #f6f3ea;
+    --nav-bg: rgba(20, 26, 46, .9);
+    --shadow: 0 18px 40px -28px rgba(0, 0, 0, .6);
+  }
+  .brand img, .menu-logo { padding: 3px 6px; }
+  .brand { border-radius: 12px; }
+  .btn-mail:hover, .reviews.is-empty .reviews-link:hover, .reviews-arrows button:hover:not(:disabled) { color: #141a2e; }
+  .spot-main { color: #141a2e; }
+  .skip { color: #141a2e; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
