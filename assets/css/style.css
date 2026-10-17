@@ -87,8 +87,15 @@ h2 { font-size: clamp(34px, 4vw, 52px); }
 .hero-veil { position: absolute; inset: 0; background: var(--veil); }
 .hero-progress, .hero-content { position: absolute; left: max(clamp(20px, 4vw, 56px), calc((100vw - 1240px) / 2 + var(--gutter) - clamp(10px, 1.6vw, 24px))); right: clamp(20px, 4vw, 56px); }
 .hero-progress { top: 26px; display: flex; gap: 8px; }
-.hero-progress i { display: block; width: 56px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .4); overflow: hidden; }
-.hero-progress i:first-child { background: #fff; }
+.hero-progress { opacity: 0; transition: opacity .4s; }
+.hero.is-playing .hero-progress { opacity: 1; }
+.hero-progress i { position: relative; display: block; width: 56px; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, .4); overflow: hidden; }
+.hero-progress i::after { content: ""; position: absolute; inset: 0; background: #fff; transform: scaleX(0); transform-origin: left; }
+.hero-progress i.done::after { transform: scaleX(1); }
+.hero-progress i.run::after { animation: clip-fill var(--clip-duration, 4s) linear forwards; }
+@keyframes clip-fill { to { transform: scaleX(1); } }
+.hero-video { opacity: 0; transition: opacity .6s ease; }
+.hero-video.is-active { opacity: 1; }
 .hero-content { bottom: clamp(28px, 5vw, 64px); max-width: 980px; }
 .hero h1 { font-size: clamp(42px, 6vw, 82px); line-height: .98; letter-spacing: -.035em; margin-bottom: 14px; }
 .hero p { font-size: clamp(17px, 1.4vw, 20px); opacity: .92; max-width: 62ch; margin-bottom: 26px; }

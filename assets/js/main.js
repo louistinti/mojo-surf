@@ -1,4 +1,6 @@
+import { CONFIG } from './config.js';
 import { collectifPrice } from './pricing.js';
+import { startHeroMontage } from './hero.js';
 
 /* ---------- Prix du cours collectif ---------- */
 const p = collectifPrice(new Date());
@@ -30,3 +32,6 @@ document.addEventListener('keydown', e => {
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 });
+
+/* ---------- Montage vidéo de l'ouverture ---------- */
+startHeroMontage(document.getElementById('hero'), CONFIG.heroClips, CONFIG.heroClipSeconds);
