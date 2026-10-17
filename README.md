@@ -2,6 +2,8 @@
 
 Site one-page pour Mojo Surf, école de surf itinérante en Vendée (Saint-Gilles-Croix-de-Vie, La Sauzaie et les Dunes à Bretignolles-sur-Mer, Les Sables-d'Olonne).
 
+En ligne : https://louistinti.github.io/mojo-surf/ (GitHub Pages, publié depuis la branche `main`, mis à jour à chaque push).
+
 - Un seul fichier, `index.html` : HTML, CSS et JS sans dépendance, polices Outfit et Nunito via Google Fonts.
 - Carte illustrée en SVG avec un camion rouge qui se déplace de spot en spot, synchronisée avec le carrousel.
 - Prix du cours collectif affiché selon la saison (20 € hors saison, 25 € du 1er avril au 30 septembre), calculé à partir de la date du jour.
@@ -11,7 +13,7 @@ Site one-page pour Mojo Surf, école de surf itinérante en Vendée (Saint-Gille
 ## Voir en local
 
 ```bash
-npx http-server mojo-surf -p 5179
+npx http-server . -p 5179 -c-1
 ```
 
 ## Modifier les données
@@ -30,6 +32,6 @@ Le trait de côte et la route sont les deux `<path>` (classes `coast` et `road`)
 ## Avant une mise en ligne
 
 - **Le formulaire n'envoie rien.** Pour le brancher sur Formspree : créer un formulaire sur formspree.io, ajouter `action="https://formspree.io/f/XXXX" method="POST"` sur la balise `<form>`, et retirer la ligne `e.preventDefault()` dans le gestionnaire `submit` du script (la validation côté client reste).
-- **Les photos sont des images Unsplash temporaires**, y compris le van de l'ouverture. À remplacer par les vraies photos de l'école et des spots.
-- **Contacts à vérifier** : le téléphone `06 14 26 36 42` et l'email `mojosurf360@gmail.com` viennent de la page Facebook de l'école.
+- **Les photos du site sont encore des images Unsplash temporaires**, y compris le van de l'ouverture. Le logo et les vraies photos du camion sont dans le dépôt (`Mojo_logo.jpeg`, `mojo_logo_truck.jpeg`, `truck_boards.jpeg`, `truck_board_side.jpeg`) mais pas encore intégrés à la page.
+- **Contacts** : le téléphone `06 14 26 36 42` est confirmé (il est peint sur le camion). L'email `mojosurf360@gmail.com` vient de la page Facebook de l'école et reste à vérifier.
 - **Textes à faire relire par le moniteur** : descriptions des spots, textes des fiches de cours, taille maximale du cours collectif (8 personnes), âge minimum (8 ans), condition de nage (25 m), modalités de paiement (sur place, sans acompte) et délai de réponse (24 h) ont été rédigés pour la maquette.
