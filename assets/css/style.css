@@ -116,20 +116,21 @@ h2 { font-size: clamp(34px, 4vw, 52px); }
 .key p { color: var(--ink); }
 
 /* Mojo Surf, c'est quoi */
-.about { padding: 96px 0; }
+.about { padding: clamp(48px, 7vh, 80px) 0; }
 .about-grid { display: grid; grid-template-columns: 6fr 5fr; gap: 64px; align-items: center; }
-.about h2 { margin-bottom: 18px; }
-.points { margin-top: 24px; display: grid; gap: 12px; }
+.about-text .lede { max-width: 58ch; }
+.about h2 { margin-bottom: 16px; }
+.points { margin-top: 18px; display: grid; gap: 8px; }
 .points li { position: relative; padding-left: 26px; color: var(--ink-2); }
 .points li::before { content: ""; position: absolute; left: 0; top: .55em; width: 12px; height: 12px; border-radius: 50%; background: var(--lagoon-dot); }
-.where { margin-top: 30px; }
+.where { margin-top: 22px; }
 .where-label { color: var(--ink); font-size: 14px; }
 .where-label + .where-row { margin-top: 10px; }
-.where-row + .where-label { margin-top: 16px; }
+.where-row + .where-label { margin-top: 12px; }
 .where-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .spot { padding: 8px 14px; border-radius: 999px; background: var(--chip); color: var(--ink); font-size: 15px; }
 .spot-main { background: var(--navy); color: var(--page); font-weight: 600; padding: 8px 16px; }
-.about-photo { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 24px; }
+.about-photo { width: 100%; aspect-ratio: 4 / 3; max-height: min(460px, calc(100vh - var(--nav-h) - 120px)); object-fit: cover; border-radius: 24px; }
 
 /* Le cours */
 .course { background: var(--sand); padding: 72px 0 96px; }
@@ -221,6 +222,12 @@ h2 { font-size: clamp(34px, 4vw, 52px); }
   .skip { color: #141a2e; }
 }
 
+/* Apparitions au défilement : discrètes, seulement si le visiteur accepte les animations */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .js .reveal.is-in { opacity: 1; transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
@@ -239,6 +246,7 @@ h2 { font-size: clamp(34px, 4vw, 52px); }
   .key { padding: 18px 20px; }
   .key h2 { font-size: 21px; }
   .about, .reviews { padding: 64px 0; }
+  .about-photo { max-height: none; }
   .about-grid { gap: 32px; }
   .course { padding: 56px 0 64px; }
   .course-grid { gap: 32px; }

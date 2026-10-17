@@ -1,14 +1,24 @@
-# Mojo Surf, école de surf itinérante
+# Mojo Surf, cours de surf à Saint-Gilles-Croix-de-Vie
 
-Site one-page pour Mojo Surf, école de surf itinérante en Vendée (Saint-Gilles-Croix-de-Vie, La Sauzaie et les Dunes à Bretignolles-sur-Mer, Les Sables-d'Olonne).
+Site one-page de Mojo Surf, l'école de surf de Stéphane à Saint-Gilles-Croix-de-Vie : cours collectifs de 2 h toute l'année, dès 10 ans, débutants et intermédiaires.
 
-En ligne : https://louistinti.github.io/mojo-surf/ (GitHub Pages, publié depuis la branche `main`, mis à jour à chaque push).
+En ligne : https://louistinti.github.io/mojo-surf/ (GitHub Pages, publié depuis la branche `main`, mis à jour en une minute environ après chaque push).
 
-- Un seul fichier, `index.html` : HTML, CSS et JS sans dépendance, polices Outfit et Nunito via Google Fonts.
-- Carte illustrée en SVG avec un camion rouge qui se déplace de spot en spot, synchronisée avec le carrousel.
-- Prix du cours collectif affiché selon la saison (20 € hors saison, 25 € du 1er avril au 30 septembre), calculé à partir de la date du jour.
-- Chaque carte de cours s'ouvre en fiche (pop-up native `<dialog>`) avec le détail, le nombre de personnes maximum, le prix par personne, les options matériel cochables avec total mis à jour, et un bouton Réserver qui présélectionne la formule dans le formulaire.
-- Mode clair et sombre selon le réglage du système, version mobile dédiée (menu plein écran, barre « Réserver » fixe en bas, balayage dans le carrousel).
+Conception et maquette : `docs/superpowers/specs/2026-10-17-mojo-surf-refonte-design.md` et `docs/superpowers/mockups/2026-10-17-maquette-refonte.html`.
+
+## Organisation
+
+| Fichier | Rôle |
+|---|---|
+| `index.html` | Contenu et structure de la page |
+| `assets/css/style.css` | Design, mode sombre automatique, version mobile |
+| `assets/js/config.js` | **Le seul fichier à modifier à la main** : prix, vidéos, avis Google |
+| `assets/js/pricing.js` | Prix du cours collectif selon la date |
+| `assets/js/hero.js` | Montage vidéo de l'ouverture |
+| `assets/js/reviews.js` | Avis Google en direct |
+| `assets/js/main.js` | Branche le tout sur la page |
+| `assets/img/` | Logo et photos du camion |
+| `tests/` | Tests automatiques |
 
 ## Voir en local
 
@@ -16,22 +26,57 @@ En ligne : https://louistinti.github.io/mojo-surf/ (GitHub Pages, publié depuis
 npx http-server . -p 5179 -c-1
 ```
 
-## Modifier les données
+Puis ouvrir http://localhost:5179/
 
-Tout ce qui change est en tête du `<script>` dans `index.html` :
+## Tests
 
-- `PRICING` : les deux prix du cours collectif et les bornes de la haute saison.
-- `SPOTS` : nom, lieu, position sur la carte (`x`, `y` dans le repère du SVG), description et photos de chaque spot.
+```bash
+npm test
+```
 
-Pour tester le prix saisonnier depuis la console du navigateur : `mojoApplySeasonPrice(new Date(2026, 6, 1))` affiche le tarif été, `mojoApplySeasonPrice(new Date(2026, 10, 1))` le tarif hors saison.
+Les vérifications visuelles (marges mobiles, contrastes, mode sombre) sont dans `tests/browser/` et se lancent avec `playwright-cli run-code --filename=...` sur la page ouverte.
 
-## Remplacer la carte par un dessin
+## Changer les prix
 
-Le trait de côte et la route sont les deux `<path>` (classes `coast` et `road`) dans le `<svg id="map">`. On peut les remplacer par n'importe quel dessin dans le même `viewBox` (`0 0 400 600`), puis ajuster les coordonnées `x` et `y` de chaque spot dans `SPOTS`. Les points, les étiquettes et le camion sont générés et positionnés par le script.
+Dans `assets/js/config.js`, bloc `pricing`. Par défaut : 25 € d'avril à décembre, 20 € de janvier à mars. Le prix affiché change tout seul selon la date du jour du visiteur. Les options matériel (combinaison, chaussons, gants, cagoule) sont écrites dans `index.html`, section « Le cours collectif » et FAQ.
 
-## Avant une mise en ligne
+## Remplacer les vidéos de l'ouverture
 
-- **Le formulaire n'envoie rien.** Pour le brancher sur Formspree : créer un formulaire sur formspree.io, ajouter `action="https://formspree.io/f/XXXX" method="POST"` sur la balise `<form>`, et retirer la ligne `e.preventDefault()` dans le gestionnaire `submit` du script (la validation côté client reste).
-- **Les photos du site sont encore des images Unsplash temporaires**, y compris le van de l'ouverture. Le logo et les vraies photos du camion sont dans le dépôt (`Mojo_logo.jpeg`, `mojo_logo_truck.jpeg`, `truck_boards.jpeg`, `truck_board_side.jpeg`) mais pas encore intégrés à la page.
-- **Contacts** : le téléphone `06 14 26 36 42` est confirmé (il est peint sur le camion). L'email `mojosurf360@gmail.com` vient de la page Facebook de l'école et reste à vérifier.
-- **Textes à faire relire par le moniteur** : descriptions des spots, textes des fiches de cours, taille maximale du cours collectif (8 personnes), âge minimum (8 ans), condition de nage (25 m), modalités de paiement (sur place, sans acompte) et délai de réponse (24 h) ont été rédigés pour la maquette.
+Les quatre extraits actuels sont provisoires (banque Mixkit, licence gratuite). Pour mettre les vidéos de Stéphane :
+
+1. Exporter chaque extrait en MP4 (H.264), 1280 × 720, environ 4 secondes, sans son, idéalement moins de 4 Mo. Une version légère en 640 × 360 pour le mobile est conseillée.
+2. Les déposer dans `assets/video/`.
+3. Dans `config.js`, remplacer `heroClips` :
+
+```js
+heroClips: [
+  { src: 'assets/video/clip1-720.mp4', small: 'assets/video/clip1-360.mp4' },
+  { src: 'assets/video/clip2-720.mp4', small: 'assets/video/clip2-360.mp4' },
+  { src: 'assets/video/clip3-720.mp4', small: 'assets/video/clip3-360.mp4' },
+  { src: 'assets/video/clip4-720.mp4', small: 'assets/video/clip4-360.mp4' },
+],
+```
+
+Un seul montage de 16 secondes fonctionne aussi : mettre une seule ligne dans `heroClips`. La photo du camion reste affichée si la vidéo ne peut pas jouer (connexion lente, économie de données, préférence « réduire les animations »).
+
+## Activer les vrais avis Google
+
+Sans clé, la section « Leurs expériences » affiche seulement le bouton « Voir tous les avis sur Google ». Pour afficher le carrousel des vrais avis :
+
+1. **Créer un projet** sur https://console.cloud.google.com/ (un compte de facturation est demandé par Google, l'usage de ce site reste dans le quota gratuit).
+2. **Activer deux API** dans « API et services » : *Maps JavaScript API* et *Places API (New)*.
+3. **Créer une clé** dans « Identifiants » > « Créer des identifiants » > « Clé API ».
+4. **Restreindre la clé**, indispensable puisqu'elle est visible dans le code :
+   - Restrictions d'application : « Sites web », avec `https://louistinti.github.io/*` et `http://localhost:*/*`.
+   - Restrictions d'API : uniquement *Maps JavaScript API* et *Places API (New)*.
+5. **Plafonner l'usage** : dans « Quotas » de *Places API (New)*, limiter les requêtes par jour (par exemple 300) pour ne jamais dépasser le quota gratuit.
+6. **Trouver l'identifiant de la fiche** (Place ID) avec https://developers.google.com/maps/documentation/places/web-service/place-id : chercher « Mojo Surf Saint-Gilles-Croix-de-Vie » et vérifier que le point est bien au 46.68974, -1.93832 (au sud du port, près de la Grande Plage). L'identifiant ressemble à `ChIJ…`.
+7. **Renseigner** `apiKey` et `placeId` dans `config.js`, bloc `google`, puis pousser sur `main`.
+
+Les avis ne sont jamais stockés : la page les demande à Google à chaque visite, comme l'exigent les règles de Google. L'API renvoie au maximum 5 avis. Le lien de la fiche (`mapsUrl`) est déjà renseigné.
+
+## À faire relire par Stéphane
+
+- La présentation « Mojo Surf, c'est quoi ? ».
+- Les réponses de la FAQ, en particulier le report de séance sans frais et la confirmation du lieu la veille.
+- Les niveaux décrits dans « Le cours collectif ».

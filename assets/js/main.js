@@ -3,6 +3,8 @@ import { collectifPrice } from './pricing.js';
 import { startHeroMontage } from './hero.js';
 import { loadReviews, normalizePlace, reviewsMarkup, ratingLabel } from './reviews.js';
 
+document.documentElement.classList.add('js');
+
 /* ---------- Prix du cours collectif ---------- */
 const p = collectifPrice(new Date());
 document.querySelectorAll('[data-price]').forEach(el => { el.textContent = p.price; });
@@ -70,3 +72,9 @@ async function initReviews() {
   update();
 }
 initReviews();
+
+/* ---------- Apparitions au défilement ---------- */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+}, { rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
