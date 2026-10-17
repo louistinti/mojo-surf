@@ -71,7 +71,12 @@ async function initReviews() {
   window.addEventListener('resize', update);
   update();
 }
-initReviews();
+// Google n'est appelé que si le visiteur approche de la section, pour ménager le quota gratuit.
+const avis = document.getElementById('avis');
+const avisIO = new IntersectionObserver(entries => {
+  if (entries.some(e => e.isIntersecting)) { avisIO.disconnect(); initReviews(); }
+}, { rootMargin: '600px 0px' });
+avisIO.observe(avis);
 
 /* ---------- Apparitions au défilement ---------- */
 const io = new IntersectionObserver(entries => {

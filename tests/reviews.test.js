@@ -16,7 +16,7 @@ test('normalise une fiche Google et ignore les avis sans texte', () => {
   assert.equal(data.count, 27);
   assert.equal(data.url, 'https://maps.google.com/?cid=1');
   assert.equal(data.reviews.length, 1);
-  assert.deepEqual(data.reviews[0], { author: 'Camille R.', authorUrl: 'https://maps.google.com/u/1', photo: 'https://lh3.googleusercontent.com/a.png', stars: 5, text: 'Super cours avec Stéphane, on a pris plein de vagues.', when: 'il y a 2 mois' });
+  assert.deepEqual(data.reviews[0], { author: 'Camille R.', authorUrl: 'https://maps.google.com/u/1', photo: 'https://lh3.googleusercontent.com/a.png', stars: 5, text: 'Super cours avec Stéphane, on a pris plein de vagues.', link: '', when: 'il y a 2 mois' });
 });
 
 test('une fiche sans note donne null', () => {
@@ -24,13 +24,21 @@ test('une fiche sans note donne null', () => {
   assert.equal(normalizePlace(null), null);
 });
 
-test('un avis très long est coupé sur un mot avec des points de suspension', () => {
+test('un avis long est affiché en entier, sans coupure ni points de suspension ajoutés', () => {
   const words = Array.from({ length: 150 }, (_, i) => `mot${i}`).join(' ');
-  const html = reviewsMarkup({ rating: 5, count: 1, url: '', reviews: [{ ...normalizePlace({ rating: 5, reviews: [review()] }).reviews[0], text: words }] });
-  assert.match(html, /…/);
-  const shown = html.match(/<p class="review-text">([^<]*)<\/p>/)[1];
-  assert.ok(shown.length <= 281, `longueur ${shown.length}`);
-  assert.match(shown, /mot\d+…$/, 'coupé sur un mot entier');
+  const html = reviewsMarkup({ rating: 5, count: 1, url: 'https://maps.google.com/?cid=1', reviews: [{ author: 'Léa', authorUrl: '', photo: '', stars: 5, text: words, when: 'hier', link: '' }] });
+  assert.ok(html.includes(words), 'texte complet présent');
+  assert.ok(!html.includes('…'));
+});
+
+test('le texte original est préféré à la traduction automatique', () => {
+  const data = normalizePlace({ rating: 5, reviews: [review({ text: 'Great lesson', originalText: 'Super cours' })] });
+  assert.equal(data.reviews[0].text, 'Super cours');
+});
+
+test('lien « Lire sur Google » vers l’avis, sinon vers la fiche', () => {
+  const html = reviewsMarkup({ rating: 5, count: 1, url: 'https://maps.google.com/?cid=1', reviews: [{ author: 'Léa', authorUrl: '', photo: '', stars: 5, text: 'Top', when: '', link: '' }] });
+  assert.match(html, /<a class="review-more" href="https:\/\/maps\.google\.com\/\?cid=1"/);
 });
 
 test('le texte et le nom sont échappés', () => {

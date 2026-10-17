@@ -1,17 +1,18 @@
 // Avis Google : récupérés en direct à chaque visite (rien n'est stocké, conformément aux règles Google).
-const MAX_CHARS = 280;
 
 /** Met une fiche Google (classe Place de la Maps JS API) dans un format simple. Null si pas de note. */
 export function normalizePlace(place) {
   if (!place || typeof place.rating !== 'number') return null;
   const reviews = (place.reviews || [])
-    .filter(r => typeof r.text === 'string' && r.text.trim())
+    .map(r => ({ ...r, body: (typeof r.originalText === 'string' && r.originalText.trim()) ? r.originalText : r.text }))
+    .filter(r => typeof r.body === 'string' && r.body.trim())
     .map(r => ({
       author: r.authorAttribution?.displayName || 'Avis Google',
       authorUrl: r.authorAttribution?.uri || '',
       photo: r.authorAttribution?.photoURI || '',
       stars: Math.round(r.rating || 0),
-      text: r.text.trim(),
+      text: r.body.trim(),
+      link: r.googleMapsURI || '',
       when: r.relativePublishTimeDescription || '',
     }));
   return { rating: place.rating, count: place.userRatingCount || 0, url: place.googleMapsURI || '', reviews };
@@ -19,14 +20,7 @@ export function normalizePlace(place) {
 
 const escapeHtml = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-function shorten(text) {
-  if (text.length <= MAX_CHARS) return text;
-  const cut = text.slice(0, MAX_CHARS);
-  const lastSpace = cut.lastIndexOf(' ');
-  return `${(lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.!?]+$/, '')}…`;
-}
-
-/** Cartes HTML des avis, texte échappé et coupé proprement. */
+/** Cartes HTML des avis : texte complet et échappé (la coupure est visuelle, en CSS), lien vers Google. */
 export function reviewsMarkup(data) {
   return data.reviews.map(r => {
     const stars = '★'.repeat(r.stars) + '☆'.repeat(Math.max(0, 5 - r.stars));
@@ -36,7 +30,8 @@ export function reviewsMarkup(data) {
     const photo = r.photo ? `<img src="${escapeHtml(r.photo)}" alt="" width="32" height="32" loading="lazy" referrerpolicy="no-referrer">` : '';
     return `<article class="review">
   <p class="review-stars" role="img" aria-label="${r.stars} étoiles sur 5">${stars}</p>
-  <p class="review-text">${escapeHtml(shorten(r.text))}</p>
+  <p class="review-text">${escapeHtml(r.text)}</p>
+  <a class="review-more" href="${escapeHtml(r.link || data.url)}" target="_blank" rel="noopener">Lire sur Google</a>
   <p class="review-who">${photo}<span>${name}${r.when ? `, ${escapeHtml(r.when)}` : ''}</span></p>
 </article>`;
   }).join('\n');

@@ -69,7 +69,7 @@ Sans clé, la section « Leurs expériences » affiche seulement le bouton « Vo
 4. **Restreindre la clé**, indispensable puisqu'elle est visible dans le code :
    - Restrictions d'application : « Sites web », avec `https://louistinti.github.io/*` et `http://localhost:*/*`.
    - Restrictions d'API : uniquement *Maps JavaScript API* et *Places API (New)*.
-5. **Plafonner l'usage** : dans « Quotas » de *Places API (New)*, limiter les requêtes par jour (par exemple 300) pour ne jamais dépasser le quota gratuit.
+5. **Plafonner l'usage** : dans « Quotas » de *Places API (New)*, limiter les requêtes par jour (par exemple 30) pour rester dans le quota gratuit. Les avis relèvent du niveau tarifaire le plus élevé de Google (environ 1 000 appels gratuits par mois, à vérifier sur la grille tarifaire en vigueur). Ajouter aussi une alerte de budget à 1 € dans « Facturation ». La page n'appelle Google que lorsque le visiteur approche de la section des avis ; si le plafond est atteint, la section affiche simplement le bouton vers Google.
 6. **Trouver l'identifiant de la fiche** (Place ID) avec https://developers.google.com/maps/documentation/places/web-service/place-id : chercher « Mojo Surf Saint-Gilles-Croix-de-Vie » et vérifier que le point est bien au 46.68974, -1.93832 (au sud du port, près de la Grande Plage). L'identifiant ressemble à `ChIJ…`.
 7. **Renseigner** `apiKey` et `placeId` dans `config.js`, bloc `google`, puis pousser sur `main`.
 
