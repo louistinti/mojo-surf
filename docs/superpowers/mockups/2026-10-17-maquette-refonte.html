@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mojo Surf, maquette</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap">
+<style>
+  :root{--navy:#1f2a55;--ink:#56608a;--red:#a8333f;--lagoon:#cfeaea;--sand:#fbf6e6;--sun:#fbf1c9;--sky:#f4f8fb;--line:#e6e9f0}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  [id]{scroll-margin-top:110px}
+  body{margin:0;background:#fff;color:var(--navy);font:400 17px/1.6 "Outfit",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  p{margin:0;text-wrap:pretty}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+  h2,h3{margin:0;font-weight:700;letter-spacing:-.025em;line-height:1.05}
+  h2{font-size:clamp(34px,4vw,52px)}
+  .muted{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:16px;padding:14px 24px;border-radius:999px;text-decoration:none;white-space:nowrap}
+  .btn.p{background:var(--red);color:#fff}
+  .btn.s{background:var(--sun);color:var(--navy)}
+  .btn.o{box-shadow:inset 0 0 0 1.5px var(--navy);color:var(--navy)}
+  .wave{display:block;width:100%;height:clamp(18px,3vw,40px)}
+
+  .nav{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.92);backdrop-filter:blur(8px)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:92px}
+  .nav img{height:76px;width:auto}
+  .nav .links{display:flex;gap:28px;align-items:center;font-size:16px}
+  .nav .links a:not(.btn){color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+  .nav .links a:not(.btn):hover{color:var(--navy)}
+  .menu-btn{display:none;font-weight:600;color:var(--navy);min-height:44px;align-items:center}
+  .nav .btn{padding:10px 20px;font-size:15px}
+
+  .hero{position:relative;height:calc(100vh - 112px);min-height:520px;margin:0 clamp(10px,1.6vw,24px);border-radius:24px;overflow:hidden}
+  .hero img{width:100%;height:100%;object-fit:cover}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08) 35%,rgba(20,25,50,.66))}
+  .hero .strip{position:absolute;top:26px;left:clamp(20px,4vw,56px);display:flex;gap:8px}
+  .hero .strip i{display:block;width:56px;height:4px;border-radius:2px;background:rgba(255,255,255,.4);overflow:hidden}
+  .hero .strip i:first-child{background:#fff}
+  .hero .txt{position:absolute;left:clamp(20px,4vw,56px);right:clamp(20px,4vw,56px);bottom:clamp(28px,5vw,64px);color:#fff;max-width:980px}
+  .hero h1{margin:0 0 14px;font-size:clamp(42px,6vw,82px);line-height:.98;letter-spacing:-.035em;font-weight:700}
+  .hero p{font-size:clamp(17px,1.4vw,20px);opacity:.92;margin-bottom:26px;max-width:62ch}
+  .hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+  .nw{white-space:nowrap}
+  .hero .txt,.hero .strip{left:max(clamp(20px,4vw,56px),calc((100vw - 1240px)/2 + clamp(16px,4vw,48px) - clamp(10px,1.6vw,24px)))}
+
+  .keys{background:var(--lagoon);padding:6px 0 56px}
+  .keys .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .key{background:rgba(255,255,255,.82);border-radius:18px;padding:26px}
+  .key b{display:block;font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+
+  .about{padding:96px 0}
+  .about .grid{display:grid;grid-template-columns:6fr 5fr;gap:64px;align-items:center}
+  .about h2{margin-bottom:18px}
+  .about ul{margin:24px 0 0;padding:0;list-style:none;display:grid;gap:12px}
+  .about li{padding-left:26px;position:relative;color:#33406f}
+  .about li::before{content:"";position:absolute;left:0;top:9px;width:12px;height:12px;border-radius:50%;background:#9fd4d6}
+  .about img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:24px}
+  .where{margin-top:30px;font-size:15px}
+  .where .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .where .label{display:block;color:var(--ink);font-size:14px}
+  .where .main{background:var(--navy);color:#fff;border-radius:999px;padding:8px 16px;font-weight:600}
+  .where .alt{background:#f2f4f8;border-radius:999px;padding:8px 14px;color:var(--ink)}
+
+  .course{background:var(--sand);padding:72px 0 96px}
+  .course .grid{display:grid;grid-template-columns:5fr 6fr;gap:56px;align-items:start}
+  .price{font-size:clamp(56px,6vw,84px);font-weight:700;letter-spacing:-.04em;line-height:1;margin-top:22px}
+  .price small{font-size:18px;font-weight:500;color:var(--ink);letter-spacing:0}
+  .season{display:inline-block;margin-top:12px;font-size:15px;color:var(--ink);background:#fff;border-radius:999px;padding:8px 14px}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+  .facts div{background:#fff;border-radius:16px;padding:18px;color:var(--ink);font-size:15px}
+  .facts b{display:block;font-size:19px;color:var(--navy);font-weight:600;margin-bottom:2px}
+  .gear{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+  .gear span{background:#fff;border-radius:999px;padding:9px 16px;font-size:15px}
+  .gear b{color:var(--red);font-weight:600}
+  .contact{display:flex;gap:12px;flex-wrap:wrap}
+
+  .reviews{padding:96px 0}
+  .rev-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+  .rating{color:var(--ink)}
+  .rating b{font-size:36px;color:var(--navy);letter-spacing:-.02em}
+  .rev-grid{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 36px)/3);gap:18px;margin-top:30px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+  .rev-grid::-webkit-scrollbar{display:none}
+  .rev{scroll-snap-align:start}
+  .rev{border-radius:20px;padding:26px;background:var(--sky)}
+  .rev .stars{color:#a9750f;letter-spacing:3px}
+  .rev .ph{height:12px;border-radius:6px;background:#e1e6ef;margin-top:12px}
+  .rev .ph.s{width:58%}
+  .rev .who{margin-top:20px;font-size:15px;color:var(--ink)}
+  .rev-nav{display:flex;justify-content:space-between;align-items:center;margin-top:22px}
+  .rev-nav a{color:var(--navy);display:inline-flex;align-items:center;min-height:44px}
+  .arrows{display:flex;gap:8px}
+  .arrows span{width:44px;height:44px;border-radius:50%;box-shadow:inset 0 0 0 1.5px var(--navy);display:grid;place-items:center;font-size:18px}
+  .dots{display:flex;gap:6px}
+  .dots i{width:8px;height:8px;border-radius:50%;background:#cfd6e4}
+  .dots i:first-child{background:var(--navy)}
+
+  .faq{padding:0 0 96px}
+  .faq .grid{display:grid;grid-template-columns:4fr 8fr;gap:56px}
+  .faq-list div{border-top:1px solid var(--line);padding:20px 0;font-size:19px;font-weight:600;display:flex;justify-content:space-between}
+  .faq-list div:last-child{border-bottom:1px solid var(--line)}
+  .faq-list div::after{content:"+";color:var(--red);font-weight:500;font-size:24px;line-height:1}
+
+  footer{background:var(--navy);color:#dfe5f5;padding:36px 0}
+  footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  footer b{color:#fff}
+
+  @media (max-width:860px){
+    .nav .links a:not(.btn){display:none}
+    .menu-btn{display:inline-flex}
+    .nav .links{gap:18px}
+    .nav .wrap{height:72px}
+    .nav img{height:52px}
+    .wrap{padding:0 16px}
+    .hero{height:calc(100svh - 92px);margin:0 16px}
+    .hero .txt,.hero .strip{left:20px;right:20px}
+    .keys .grid,.about .grid,.course .grid,.faq .grid{grid-template-columns:1fr}
+    .keys .grid{gap:10px}
+    .key{padding:18px 20px}
+    .key b{font-size:21px}
+    .about,.reviews{padding:64px 0}
+    .about .grid{gap:32px}
+    .rev-grid{grid-auto-columns:86%}
+    .facts{grid-template-columns:1fr;gap:8px}
+    .facts div{display:grid;grid-template-columns:128px 1fr;gap:12px;align-items:baseline;padding:14px 16px}
+    .facts b{margin:0;font-size:17px}
+    .rev-nav .arrows{display:none}
+    .contact .btn{flex:1 1 100%;justify-content:center}
+    .faq .grid{gap:12px}
+    .faq-list div{font-size:17px}
+    footer .wrap{flex-direction:column;gap:6px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+  <img src="mojo-logo.png" alt="Mojo Surf" width="1203" height="724">
+  <div class="links"><a href="#mojo">Mojo Surf</a><a href="#cours">Le cours</a><a href="#avis">Avis</a><a href="#faq">FAQ</a><span class="menu-btn">Menu</span><a class="btn p" href="#contact">Contacter</a></div>
+</div></nav>
+
+<header class="hero">
+  <img src="../../../truck_boards.jpeg" alt="">
+  <div class="veil"></div>
+  <div class="strip"><i></i><i></i><i></i><i></i></div>
+  <div class="txt">
+    <h1>Viens surfer à <span class="nw">Saint-Gilles</span>, toute l'année.</h1>
+    <p>Cours de surf de 2 h pour débutants et intermédiaires, petits et grands.</p>
+    <div class="ctas"><a class="btn p" href="#contact">Contacter</a></div>
+  </div>
+</header>
+
+<svg class="wave" viewBox="0 0 400 26" preserveAspectRatio="none" aria-hidden="true" style="margin-top:24px"><path d="M0 14 C40 2 80 2 120 14 S200 26 240 14 S320 2 360 14 S400 20 400 20 V26 H0Z" fill="#cfeaea"/></svg>
+<section class="keys"><div class="wrap grid">
+  <div class="key"><b>Toute l'année</b><span class="muted">Été comme hiver, dès que les conditions sont bonnes</span></div>
+  <div class="key"><b>Tous les âges</b><span class="muted">Dès 10 ans, débutants et intermédiaires, 8 personnes maximum</span></div>
+  <div class="key"><b>Cours de 2 h</b><span class="muted">Planche incluse, combinaison en option</span></div>
+</div></section>
+
+<section class="about" id="mojo"><div class="wrap grid">
+  <div>
+    <h2>Mojo Surf, c'est quoi ?</h2>
+    <p class="muted">Moi c'est Stéphane. Je surfe et j'enseigne à Saint-Gilles et aux Dunes depuis 15 ans. Je ne fais cours que quand les conditions sont bonnes : je choisis le spot et la marée pour que tu progresses vraiment.</p>
+    <ul>
+      <li>Des conseils personnalisés pendant toute la session</li>
+      <li>Pendant les vacances, rendez-vous fixe Grande Plage de Saint-Gilles</li>
+      <li>Le reste de l'année, je peux bouger pour aller chercher les meilleures vagues</li>
+    </ul>
+    <div class="where">
+      <span class="label">Mon spot principal</span>
+      <div class="row"><span class="main">Saint-Gilles-Croix-de-Vie</span></div>
+      <span class="label" style="margin-top:14px">Et parfois, selon les conditions</span>
+      <div class="row"><span class="alt">Les Dunes</span><span class="alt">Bretignolles</span><span class="alt">Les Sables-d'Olonne</span><span class="alt">Saint-Jean-de-Monts</span></div>
+    </div>
+  </div>
+  <img src="../../../truck_board_side.jpeg" alt="">
+</div></section>
+
+<svg class="wave" viewBox="0 0 400 26" preserveAspectRatio="none" aria-hidden="true"><path d="M0 14 C40 2 80 2 120 14 S200 26 240 14 S320 2 360 14 S400 20 400 20 V26 H0Z" fill="#fbf6e6"/></svg>
+<section class="course" id="cours"><div class="wrap grid">
+  <div>
+    <h2>Le cours collectif</h2>
+    <p class="price">20 € <small>par personne, 2 h</small></p>
+    <span class="season">Tarif de janvier à mars. 25 € d'avril à décembre.</span>
+    <p class="muted" style="margin-top:22px;max-width:44ch">Pour découvrir le surf ou progresser, en petit groupe. Je m'adapte au niveau de chacun et je te dis quoi travailler.</p>
+  </div>
+  <div>
+    <div class="facts">
+      <div><b>Débutant</b>Premiers pas, mousses, apprendre à se lever</div>
+      <div><b>Intermédiaire</b>Vagues vertes, placement, lecture de vague</div>
+      <div><b>8 personnes</b>Au maximum, pour que chacun soit suivi</div>
+      <div><b>Planche incluse</b>Adaptée à ton niveau</div>
+    </div>
+    <div class="gear"><span>Combinaison <b>+5 €</b></span><span>Chaussons <b>+3 €</b></span><span>Gants <b>+2 €</b></span><span>Cagoule <b>offerte</b></span></div>
+    <div class="contact" id="contact"><a class="btn p" href="#">06 14 26 36 42</a><a class="btn o" href="#">mojosurf360@gmail.com</a></div>
+  </div>
+</div></section>
+
+<section class="reviews" id="avis"><div class="wrap">
+  <div class="rev-head"><h2>Leurs expériences</h2><span class="rating"><b>4,9</b> / 5 sur Google</span></div>
+  <div class="rev-grid">
+    <div class="rev"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div><div class="who">Prénom, il y a 2 mois</div></div>
+    <div class="rev"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div><div class="who">Prénom, il y a 3 mois</div></div>
+    <div class="rev"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div><div class="who">Prénom, il y a 5 mois</div></div>
+    <div class="rev"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div><div class="who">Prénom, il y a 6 mois</div></div>
+    <div class="rev"><div class="stars" role="img" aria-label="5 étoiles sur 5">★★★★★</div><div class="ph"></div><div class="ph"></div><div class="ph s"></div><div class="who">Prénom, il y a 8 mois</div></div>
+  </div>
+  <div class="rev-nav"><div class="arrows"><span aria-hidden="true">‹</span><span aria-hidden="true">›</span></div><a href="#">Voir tous les avis sur Google</a></div>
+</div></section>
+
+<section class="faq" id="faq"><div class="wrap grid">
+  <h2>Questions</h2>
+  <div class="faq-list">
+    <div>À partir de quel âge ?</div>
+    <div>Qu'est-ce que j'apporte ?</div>
+    <div>Comment je sais où est le rendez-vous ?</div>
+    <div>Et s'il n'y a pas de vagues ?</div>
+  </div>
+</div></section>
+
+<footer><div class="wrap"><div><b>Mojo Surf</b>, école de surf à Saint-Gilles-Croix-de-Vie</div><div>06 14 26 36 42 · mojosurf360@gmail.com</div></div></footer>
+
+</body>
+</html>
