@@ -48,9 +48,31 @@ test('le texte et le nom sont échappés', () => {
   assert.ok(html.includes('&lt;b&gt;Zoé&lt;/b&gt;'));
 });
 
-test('note au format français', () => {
-  assert.equal(ratingLabel({ rating: 4.9, count: 27 }), '<b>4,9</b> / 5 · 27 avis Google');
-  assert.equal(ratingLabel({ rating: 5, count: 1 }), '<b>5,0</b> / 5 · 1 avis Google');
+test('en-tête de note façon Google : note, étoiles accessibles, nombre d’avis', () => {
+  assert.equal(ratingLabel({ rating: 4.9, count: 27 }),
+    '<span class="g-score">4,9</span><span class="g-stars" role="img" aria-label="Note de 4,9 sur 5">★★★★★</span><span class="g-count">(27 avis)</span>');
+  assert.match(ratingLabel({ rating: 5, count: 1 }), /aria-label="Note de 5,0 sur 5".*\(1 avis\)/);
+});
+
+const one = (over = {}) => ({ author: 'Camille R.', authorUrl: '', photo: '', stars: 5, text: 'Top', when: 'il y a 2 mois', link: '', ...over });
+
+test('accord de l’étoile au singulier', () => {
+  assert.match(reviewsMarkup({ rating: 1, count: 1, url: 'u', reviews: [one({ stars: 1 })] }), /aria-label="1 étoile sur 5"/);
+  assert.match(reviewsMarkup({ rating: 5, count: 1, url: 'u', reviews: [one()] }), /aria-label="5 étoiles sur 5"/);
+});
+
+test('auteur sans nom : libellé de Google, pas de faux nom', () => {
+  const data = normalizePlace({ rating: 5, reviews: [review({ authorAttribution: {} })] });
+  assert.equal(data.reviews[0].author, 'Utilisateur Google');
+});
+
+test('sans photo, une pastille avec l’initiale, cachée aux lecteurs d’écran', () => {
+  assert.match(reviewsMarkup({ rating: 5, count: 1, url: 'u', reviews: [one()] }), /<span class="review-avatar" aria-hidden="true">C<\/span>/);
+});
+
+test('« Lire la suite » dit de quel avis il s’agit pour les lecteurs d’écran', () => {
+  const html = reviewsMarkup({ rating: 5, count: 1, url: 'https://g/1', reviews: [one()] });
+  assert.match(html, /<a class="review-more" href="https:\/\/g\/1" target="_blank" rel="noopener" aria-label="Lire l’avis de Camille R\. sur Google">Lire la suite<\/a>/);
 });
 
 test('sans clé ni identifiant, aucun appel et null', async () => {

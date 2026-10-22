@@ -8,8 +8,7 @@ document.documentElement.classList.add('js');
 /* ---------- Prix du cours collectif ---------- */
 const p = collectifPrice(new Date());
 document.querySelectorAll('[data-price]').forEach(el => { el.textContent = p.price; });
-document.querySelectorAll('[data-price-label]').forEach(el => { el.textContent = p.label; });
-document.querySelectorAll('[data-price-other]').forEach(el => { el.textContent = p.otherLabel; });
+document.querySelectorAll('[data-price-schedule]').forEach(el => { el.textContent = p.schedule; });
 
 /* ---------- Menu mobile ---------- */
 const menu = document.getElementById('menu');
@@ -55,18 +54,19 @@ async function initReviews() {
   rating.innerHTML = ratingLabel(data);
   if (data.url) link.href = data.url;
   section.classList.remove('is-empty');
-  [track, rating, section.querySelector('.reviews-source')].forEach(el => { el.hidden = false; });
+  [track, rating].forEach(el => { el.hidden = false; });
 
-  const arrows = section.querySelector('.reviews-arrows');
-  const step = () => (track.firstElementChild?.getBoundingClientRect().width || 0) + 18;
+  const prev = section.querySelector('.reviews-prev');
+  const next = section.querySelector('.reviews-next');
+  const step = () => (track.firstElementChild?.getBoundingClientRect().width || 0) + 16;
   const update = () => {
     const max = track.scrollWidth - track.clientWidth - 2;
-    arrows.hidden = max <= 0;
-    section.querySelector('.reviews-prev').disabled = track.scrollLeft <= 2;
-    section.querySelector('.reviews-next').disabled = track.scrollLeft >= max;
+    prev.hidden = next.hidden = max <= 0;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max;
   };
-  section.querySelector('.reviews-prev').addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
-  section.querySelector('.reviews-next').addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+  prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
   track.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update);
   update();

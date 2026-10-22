@@ -14,6 +14,7 @@ export function collectifPrice(date, pricing = CONFIG.pricing) {
     season: inSeason ? 'saison' : 'hors-saison',
     label: `Tarif ${inSeason ? seasonSpan : offSpan}`,
     otherLabel: inSeason ? `${pricing.offSeason}${NBSP}€ ${offSpan}` : `${pricing.season}${NBSP}€ ${seasonSpan}`,
+    schedule: `${pricing.season}${NBSP}€ ${seasonSpan}, ${pricing.offSeason}${NBSP}€ ${offSpan}`,
   };
 }
 

@@ -31,3 +31,8 @@ test('grille personnalisée : saison de mai à septembre, 1er octobre à 18 €'
   const pricing = { offSeason: 18, season: 22, seasonStartMonth: 5, seasonEndMonth: 9 };
   assert.equal(collectifPrice(new Date(2026, 9, 1), pricing).price, 18);
 });
+
+test('mention des deux tarifs avec leurs périodes, dans l’ordre de l’année', () => {
+  assert.equal(collectifPrice(new Date(2026, 9, 22)).schedule, '25\u00a0€ d’avril à décembre, 20\u00a0€ de janvier à mars');
+  assert.equal(collectifPrice(new Date(2027, 1, 10)).schedule, '25\u00a0€ d’avril à décembre, 20\u00a0€ de janvier à mars');
+});
